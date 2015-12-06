@@ -1,0 +1,4 @@
+#!/usr/local/python/bin/python 
+# script to remove all the crap from astrometry.net
+import os
+os.system('rm -rf *.axy *.corr *.xyls *.match *.new *.rdls *.solved *.wcs')
