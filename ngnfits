@@ -1,0 +1,5 @@
+#!/usr/local/python/bin/python 
+# script to count the number of fits files in a directory
+import glob as g
+print len(g.glob('*.fits'))
+
