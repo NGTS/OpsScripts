@@ -1,4 +1,5 @@
 # OpsScripts
 Scripts for Ops tasks
 
-sge_submit - script to submit jobs to the SGE queue
+ngnfits | counts the number of *.fits files in a directory
+ngrmastr | removes all astrometry.net fluff
