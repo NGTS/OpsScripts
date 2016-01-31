@@ -2,9 +2,20 @@
 from astropy.io import fits
 import matplotlib.pyplot as pl
 from collections import defaultdict
+from scipy import stats
 import numpy as np
 import glob as g
 import pymysql, os
+
+# 20160131
+# Camera 801 - Mean: 59578        Median: 59552
+# Camera 802 - Mean: 58597        Median: 58356
+# Camera 805 - Mean: 61259        Median: 61263
+# Camera 806 - Mean: 48729        Median: 48644
+# Camera 809 - Mean: 65069        Median: 65045
+# Camera 810 - Mean: 65037        Median: 64990
+# Camera 811 - Mean: 64518        Median: 64486
+# Camera 812 - Mean: 65169        Median: 65152
 
 max_vals=defaultdict(list)
 mini_survey_dir='/ngts/staging/archive/minisurvey'
@@ -45,7 +56,13 @@ for i in cameras:
 	ax = figm.add_subplot(4, 3, c+1)	
 	ax.set_title(i)
 	if i in max_vals:
-		ax.hist(max_vals[i],range(20000,67000)[::100])
+		ax.hist(max_vals[i],range(40000,67000)[::100])
+		ax.set_yscale('log', nonposy='clip')
 	c+=1
 figm.savefig('%s/saturationSummary.png' % (mini_survey_dir))
 pl.close()
+
+# loop over the values and print the mean and median
+for i in max_vals:
+	print "Camera %d - Mean: %d\tMedian: %d" % (i,np.average(max_vals[i]),np.median(max_vals[i]))
+
