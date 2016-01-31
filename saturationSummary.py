@@ -12,13 +12,19 @@ mini_survey_dir='/ngts/staging/archive/minisurvey'
 db=pymysql.connect(host='ds',db='ngts_ops')
 qry="SELECT image_id,camera_id FROM mini_survey WHERE astrometry=1 AND done=1"
 rc=1
+image_id,camera_id=[],[]
 with db.cursor() as cur:
 	cur.execute(qry)
 	for row in cur:
-		h=fits.open('%s/IMAGE%s.fits' % (mini_survey_dir,row[0]))[0].data
-		d=np.ravel(h)
-		max_vals[int(row[1])].append(max(d))
-		img_name='%s/IMAGE%s.hist.png' % (mini_survey_dir,row[0])
+		image_id.append(row[0])
+		camera_id.append(int(row[1]))
+db.close()
+
+for i in range(0,len(image_id)):
+	with fits.open('%s/IMAGE%s.fits' % (mini_survey_dir,image_id[i])) as h:
+		d=np.ravel(h[0].data)
+		max_vals[camera_id[i]].append(max(d))
+		img_name='%s/IMAGE%s.hist.png' % (mini_survey_dir,image_id[i])
 		if os.path.exists(img_name)==False:
 			fig,ax=pl.subplots(1,figsize=(10,10))
 			ax.hist(d,range(1,67000)[::100])
@@ -28,7 +34,6 @@ with db.cursor() as cur:
 			print('%s exists, skipping...' % (img_name))
 		print rc
 		rc+=1
-db.close()
 
 # now make a histogram of the max values per camera
 c=0
