@@ -4,7 +4,7 @@ import matplotlib.pyplot as pl
 from collections import defaultdict
 import numpy as np
 import glob as g
-import pymysql
+import pymysql, os
 
 max_vals=defaultdict(list)
 mini_survey_dir='/ngts/staging/archive/minisurvey'
