@@ -30,6 +30,7 @@ for i in range(0,len(image_id)):
 			ax.hist(d,range(1,67000)[::100])
 			ax.set_yscale('log', nonposy='clip')
 			fig.savefig(img_name,dpi=200)
+			fig.close()
 		else:
 			print('%s exists, skipping...' % (img_name))
 		print rc
@@ -47,3 +48,4 @@ for i in cameras:
 		ax.hist(max_vals[i],range(20000,67000)[::100])
 	c+=1
 figm.savefig('%s/saturationSummary.png' % (mini_survey_dir))
+fig.close()
