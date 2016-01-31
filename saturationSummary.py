@@ -6,7 +6,7 @@ import numpy as np
 import glob as g
 import pymysql
 
-max_vals=defaultlist(list)
+max_vals=defaultdict(list)
 mini_survey_dir='/ngts/staging/archive/minisurvey'
 
 db=pymysql.connect(host='ds',db='mini_survey')
