@@ -21,7 +21,7 @@ max_vals=defaultdict(list)
 mini_survey_dir='/ngts/staging/archive/minisurvey'
 
 db=pymysql.connect(host='ds',db='ngts_ops')
-qry="SELECT image_id,camera_id FROM mini_survey WHERE astrometry=1 AND done=1"
+qry="SELECT image_id,camera_id FROM mini_survey WHERE astrometry>0 AND done=1"
 rc=1
 image_id,camera_id=[],[]
 with db.cursor() as cur:
