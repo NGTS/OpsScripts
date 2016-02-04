@@ -17,7 +17,7 @@ def argParse():
 	parser.add_argument("best_r",type=int,help="show the 'best_r' images, ranked by x/y error")
 	return parser.parse_args()
 
-def findClosestImage(action_id):
+def findClosestImage(action_id,best_r):
 	db=pymysql.connect(host='ds',db='ngts_ops')
 	qry="SELECT autoguider_log.image_id,x_error,y_error,tel_alt,moon_dist,moon_frac FROM autoguider_log  INNER JOIN raw_image_list ON autoguider_log.image_id=raw_image_list.image_id WHERE action_id=%d" % (action_id)
 	image_id,xerr,yerr,alt,md,mf=[],[],[],[],[],[]
