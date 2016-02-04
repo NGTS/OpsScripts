@@ -30,7 +30,7 @@ def findClosestImage(action_id):
 	yerr=np.array(yerr)		
 	r=np.sqrt(xerr**2+yerr**2)
 	n=np.where(r==min(r))
-	print "%s - r_min=%.3f" % (image_id[n[0]],min(r))
+	print "%s - r_min=%.3f arcsec" % (image_id[n[0]],min(r))
 
 if __name__ == "__main__":
 	args=argParse()
