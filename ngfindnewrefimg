@@ -1,0 +1,37 @@
+#!/usr/local/python/bin/python
+#
+# Script to work out the best new reference image from a given action
+# The idea is you chose the action, based on moon, night quality etc
+# then this script tells you the closest image to the guide position
+# You of course still have to check that image is not got streaks in
+# etc. 
+#
+
+import pymysql
+import numpy as np
+import argparse as ap
+
+def argParse():
+	parser=ap.ArgumentParser(description='Script to deteremine best new AG ref image')
+	parser.add_argument("action_id", type=int,help="action_id to chose best image from",action="store_true")
+	return parser.parse_args()
+
+def findClosestImage(action_id):
+	conn=pymysql.connect(host='ds',db='ngts_ops')
+	qry="SELECT autoguider_log.image_id,x_error,y_error FROM autoguider_log  INNER JOIN raw_image_list ON autoguider_log.image_id=raw_image_list.image_id WHERE action_id=%d" % (action_id)
+	image_id,xerr,yerr=[],[],[]
+	with db.cursor() as cur:
+		cur.execute(qry)
+		for row in cur:
+			image_id.append(row[0])
+			xerr.append(row[1])
+			yerr.append(row[2])
+	xerr=np.array(xerr)
+	yerr=np.array(yerr)		
+	r=np.sqrt(xerr**2+yerr**2)
+	n=np.where(r==min(r))
+	print "%s - r_min=%.3f" % (image_id[n[0]],min(r))
+
+if __name__ == "__main__":
+	args=argParse()
+	findClosestImage(args.action_id)
