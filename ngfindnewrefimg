@@ -13,7 +13,7 @@ import argparse as ap
 
 def argParse():
 	parser=ap.ArgumentParser(description='Script to deteremine best new AG ref image')
-	parser.add_argument("action_id", type=int,help="action_id to chose best image from",action="store_true")
+	parser.add_argument("action_id",type=int,help="action_id to chose best image from")
 	return parser.parse_args()
 
 def findClosestImage(action_id):
