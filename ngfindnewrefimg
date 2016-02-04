@@ -37,7 +37,7 @@ def findClosestImage(action_id,best_r):
 	mf=np.array(mf)
 	r=np.sqrt(xerr**2+yerr**2)
 	temp=zip(r,image_id,alt,md,mf)
-	temp=sorted(temp)[::-1]
+	temp=sorted(temp)
 	rs,image_ids,alts,mds,mfs=zip(*temp)
 	if best_r>=len(rs):
 		best_t=len(rs)
