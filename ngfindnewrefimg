@@ -14,6 +14,7 @@ import argparse as ap
 def argParse():
 	parser=ap.ArgumentParser(description='Script to deteremine best new AG ref image')
 	parser.add_argument("action_id",type=int,help="action_id to chose best image from")
+	parser.add_argument("best_r",type=int,help="show the 'best_r' images, ranked by x/y error")
 	return parser.parse_args()
 
 def findClosestImage(action_id):
@@ -29,9 +30,16 @@ def findClosestImage(action_id):
 	xerr=np.array(xerr)
 	yerr=np.array(yerr)		
 	r=np.sqrt(xerr**2+yerr**2)
-	n=np.where(r==min(r))
-	print "%s - r_min=%.3f arcsec" % (image_id[n[0]],min(r))
+	temp=zip(r,image_id)
+	temp=sorted(temp)[::-1]
+	rs,image_ids=zip(*temp)
+	if best_r>=len(rs):
+		best_t=len(rs)
+	for i in range(0,best_r):
+		print "%s - r=%.3f arcsec" % (image_ids[i],rs[i])
 
 if __name__ == "__main__":
 	args=argParse()
-	findClosestImage(args.action_id)
+	if args.best_r <=0:
+		best_r=1
+	findClosestImage(args.action_id,best_r)
