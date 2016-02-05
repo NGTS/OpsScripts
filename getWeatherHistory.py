@@ -6,8 +6,8 @@ from datetime import datetime, timedelta
 
 def argParse():
 	parser=ap.ArgumentParser(description='Script to the weather from a given night')
-	parser.add_argument("night", help="night to plot weather from (e.g. 2016-01-01)",action="store_true")
-	parser.add_argument("n_nights", help="night to plot weather from (e.g. 2016-01-01)",action="store_true")
+	parser.add_argument("night", help="night to plot weather from (e.g. 2016-01-01)")
+	parser.add_argument("n_nights", type=int,help="night to plot weather from (e.g. 2016-01-01)")
 	return parser.parse_args()
 
 def setDatetime(indate,n_nights):
