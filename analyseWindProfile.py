@@ -32,7 +32,7 @@ for i in range(0,len(wind)):
 	print "Limit: %d m/s - Average > Limit: %.4f - Max > Limit: %.4f" % (i,cfd_avg[i],cfd_mx[i])
 
 fig,ax=pl.subplots(1,figsize=(10,10))
-ax.plot(wind,cfd_avg,'r-',wind,cdf_mx,'b-')
+ax.plot(wind,cfd_avg,'r-',wind,cfd_mx,'b-')
 ax.legend(('average','gust'),loc='upper left')
 ax.set_yabel('CDF Wind Speed')
 ax.set_xlabel('Wind Speed (m/s)')
