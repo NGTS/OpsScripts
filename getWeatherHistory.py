@@ -28,7 +28,7 @@ def setDatetime(indate,n_nights):
 	return t1,t2
 
 args=argParse()
-pl.rcParams.update({'font.size': 26})
+pl.rcParams.update({'font.size': 36})
 t1,t2=setDatetime(args.night,args.n_nights)
 
 db=pymysql.connect(host='ds',db='ngts_ops')
