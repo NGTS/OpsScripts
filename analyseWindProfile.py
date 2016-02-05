@@ -25,4 +25,4 @@ mx=np.array(mx)
 for i in range(10,25):
 	n_avg=np.where(avg>i)
 	n_mx=np.where(mx>i)
-	print "Limit: %d m/s - Average > Limit: %d - Max > Limit: %d" % (i,len(n_avg[0])/float(len(avg)),len(n_mx[0])/float(len(avg)))
+	print "Limit: %d m/s - Average > Limit: %.4f - Max > Limit: %.4f" % (i,len(n_avg[0])/float(len(avg)),len(n_mx[0])/float(len(avg)))
