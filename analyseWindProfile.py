@@ -29,7 +29,7 @@ for i in range(0,len(wind)):
 	n_mx=np.where(mx>i)
 	cfd_avg[i]=1-(len(n_avg[0])/float(len(avg)))
 	cfd_mx[i]=1-(len(n_mx[0])/float(len(avg)))
-	print "Limit: %d m/s - Average > Limit: %.4f - Max > Limit: %.4f" % (i,cfd_avg[i],)
+	print "Limit: %d m/s - Average > Limit: %.4f - Max > Limit: %.4f" % (i,cfd_avg[i],cdf_mx[i])
 
 fig,ax=pl.subplots(1,figsize=(10,10))
 ax.plot(wind,cfd_avg,'r-',wind,cdf_mx,'b-')
