@@ -28,7 +28,7 @@ def setDatetime(indate,n_nights):
 	return t1,t2
 
 args=argParse()
-pl.rcParams.update({'font.size': 22})
+pl.rcParams.update({'font.size': 26})
 t1,t2=setDatetime(args.night,args.n_nights)
 
 db=pymysql.connect(host='ds',db='ngts_ops')
@@ -84,7 +84,7 @@ with db.cursor() as cur:
 db.close()
 
 # plots - vertical
-fig,ax = pl.subplots(6,1,figsize=(10, 30), sharex=True)
+fig,ax = pl.subplots(6,1,figsize=(30, 30), sharex=True)
 ax[0].fill_between(bucket,30,50,facecolor='lightcoral',linewidth=0.0)
 ax[0].fill_between(bucket,10,30,facecolor='lightsalmon',linewidth=0.0)
 ax[0].fill_between(bucket,-0,10,facecolor='lightblue',linewidth=0.0)
