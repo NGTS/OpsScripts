@@ -25,7 +25,7 @@ def setDatetime(indate,n_nights):
 			print "%s --> %s-%s-%s Successful!" % (indate,y,m,d)
 	t1=datetime(year=int(y),month=int(m),day=int(d),hour=12,minute=0,second=0)
 	t2=t1+timedelta(days=n_nights)
-	return t1.strftime('%Y-%m-%dT%H:%M:%S'),t2.strftime('%Y-%m-%dT%H:%M:%S')
+	return t1,t2
 
 args=argParse()
 pl.rcParams.update({'font.size': 22})
@@ -54,6 +54,7 @@ with db.cursor() as cur:
 		wind_speed_avg[i]=float(row[5])
 		wind_dir_avg[i]=float(row[6])	
 		i+=1
+	bucket=(bucket-bucket[0])/3600.0
 # LDR
 qry2="SELECT bucket,ldr FROM cloudwatcher WHERE tsample BETWEEN '%s' AND '%s'" % (t1,t2)
 with db.cursor() as cur:
