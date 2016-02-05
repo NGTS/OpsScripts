@@ -32,7 +32,7 @@ t1,t2=setDatetime(args.night,args.n_nights)
 
 db=pymysql.connect(host='ds',db='ngts_ops')
 # weather
-qry="SELECT bucket,humidity,pressure,temperature,dewpoint,wind_speed_avg,wind_dir_avg FROM weather_log WHERE tsample BETWEEN %s AND %s" % (t1,t2)
+qry="SELECT bucket,humidity,pressure,temperature,dewpoint,wind_speed_avg,wind_dir_avg FROM weather_log WHERE tsample BETWEEN '%s' AND '%s'" % (t1,t2)
 with db.cursor() as cur:
 	cur.execute(qry)
 	n=cur.rowcount
@@ -54,7 +54,7 @@ with db.cursor() as cur:
 		wind_dir_avg[i]=float(row[6])	
 		i+=1
 # LDR
-qry2="SELECT bucket,ldr FROM cloudwatcher WHERE tsample BETWEEN %s AND %s" % (t1,t2)
+qry2="SELECT bucket,ldr FROM cloudwatcher WHERE tsample BETWEEN '%s' AND '%s'" % (t1,t2)
 with db.cursor() as cur:
 	cur.execute(qry2)
 	n2=cur.rowcount
@@ -66,7 +66,7 @@ with db.cursor() as cur:
 		ldr[i]=float(row[1])
 		i+=1
 # sky temp
-qry3="SELECT bucket,sky_temp_c FROM cloudwatcher WHERE tsample BETWEEN %s AND %s" % (t1,t2)
+qry3="SELECT bucket,sky_temp_c FROM cloudwatcher WHERE tsample BETWEEN '%s' AND '%s'" % (t1,t2)
 with db.cursor() as cur:
 	cur.execute(qry3)
 	n3=cur.rowcount
