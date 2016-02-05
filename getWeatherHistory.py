@@ -132,7 +132,7 @@ ax[5].set_xlim(min(bucket),max(bucket))
 ax[5].set_ylabel('Pressure (+760 mbar)')
 ax[5].set_xlabel('Hours from %s' % (t1.strftime('%Y-%m-%dT%H:%M:%S')))
 
-pl.subplots_adjust(hspace=0.07)
+pl.subplots_adjust(hspace=0.17)
 pl.savefig('/home/ops/ngts/prism/monitor/img/weather_history.png',bbox_inches='tight')
 
 
