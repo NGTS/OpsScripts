@@ -22,6 +22,7 @@ def setDatetime(indate,n_nights):
 			y=indate[:4]
 			m=indate[4:6]
 			d=indate[6:8]
+			print "%s --> %s-%s-%s Successful!" % (indate,y,m,d)
 	t1=datetime(year=int(y),month=int(m),day=int(d),hour=12,minute=0,second=0)
 	t2=t1+timedelta(days=n_nights)
 	return t1.strftime('%Y-%m-%dT%H:%M:%S'),t2.strftime('%Y-%m-%dT%H:%M:%S')
