@@ -34,6 +34,6 @@ for i in range(0,len(wind)):
 fig,ax=pl.subplots(1,figsize=(10,10))
 ax.plot(wind,cfd_avg,'r-',wind,cfd_mx,'b-')
 ax.legend(('average','gust'),loc='upper left')
-ax.set_yabel('CDF Wind Speed')
+ax.set_ylabel('CDF Wind Speed')
 ax.set_xlabel('Wind Speed (m/s)')
 fig.savefig('%s/WindProfile_%s-%s.png' % (outdir,t1.strftime('%Y%m%d'),t2.strftime('%Y%m%d')),dpi=200)
