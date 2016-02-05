@@ -22,7 +22,7 @@ def setDatetime(indate,n_nights):
 
 args=argParse()
 pl.rcParams.update({'font.size': 22})
-t1,t2=setDatetime(args.night)
+t1,t2=setDatetime(args.night,args.n_nights)
 
 db=pymysql.connect(host='ds',db='ngts_ops')
 # weather
