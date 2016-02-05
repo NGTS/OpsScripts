@@ -14,8 +14,14 @@ def setDatetime(indate,n_nights):
 	try:
 		y,m,d=indate.split('-')
 	except ValueError:
-		print "Wrong date format. Need YYYY-MM-DD. Exiting..."
-		sys.exit(1) 
+		print "Wrong date format. Need YYYY-MM-DD. Trying to convert the date :)"
+		if len(indate) != 8:
+			print "OK, the date is not even in YYYYMMDD format, I quit!"
+			sys.exit(1)
+		else:
+			y=indate[:4]
+			m=indate[4:6]
+			d=indate[6:8]
 	t1=datetime(year=int(y),month=int(m),day=int(d),hour=12,minute=0,second=0)
 	t2=t1+timedelta(days=n_nights)
 	return t1.strftime('%Y-%m-%dT%H:%M:%S'),t2.strftime('%Y-%m-%dT%H:%M:%S')
