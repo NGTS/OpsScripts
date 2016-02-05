@@ -54,7 +54,7 @@ with db.cursor() as cur:
 		wind_speed_avg[i]=float(row[5])
 		wind_dir_avg[i]=float(row[6])	
 		i+=1
-	bucket=(bucket-bucket[0])/3600.0
+	bucket=(bucket-int(t1.strftime('%s')))/3600.0
 # LDR
 qry2="SELECT bucket,ldr FROM cloudwatcher WHERE tsample BETWEEN '%s' AND '%s'" % (t1,t2)
 with db.cursor() as cur:
@@ -67,6 +67,7 @@ with db.cursor() as cur:
 		bucket2[i]=float(row[0])
 		ldr[i]=float(row[1])
 		i+=1
+	bucket2=(bucket2-int(t1.strftime('%s')))/3600.0
 # sky temp
 qry3="SELECT bucket,sky_temp_c FROM cloudwatcher WHERE tsample BETWEEN '%s' AND '%s'" % (t1,t2)
 with db.cursor() as cur:
@@ -79,58 +80,59 @@ with db.cursor() as cur:
 		bucket3[i]=float(row[0])
 		sky_temp[i]=float(row[1])
 		i+=1
+	bucket3=(bucket3-int(t1.strftime('%s')))/3600.0
 db.close()
 
-plots = 0
-if plots > 0:
-	# plots - vertical
-	fig,ax = pl.subplots(6,1,figsize=(10, 30), sharex=True)
-	ax[0].fill_between(tpoint,30,50,facecolor='lightcoral',linewidth=0.0)
-	ax[0].fill_between(tpoint,10,30,facecolor='lightsalmon',linewidth=0.0)
-	ax[0].fill_between(tpoint,-0,10,facecolor='lightblue',linewidth=0.0)
-	ax[0].fill_between(tpoint,-20,0,facecolor='deepskyblue',linewidth=0.0)
-	#ax[0].set_xlim(-24,0)
-	#ax[0].set_ylim(-10,40)
-	ax[0].set_ylabel('Temp & Dew Pt. (C)')
-	ax[0].plot(tpoint,temperature,'k-')
-	ax[0].plot(tpoint,dewpoint,'b-')
+# plots - vertical
+fig,ax = pl.subplots(6,1,figsize=(10, 30), sharex=True)
+ax[0].fill_between(tpoint,30,50,facecolor='lightcoral',linewidth=0.0)
+ax[0].fill_between(tpoint,10,30,facecolor='lightsalmon',linewidth=0.0)
+ax[0].fill_between(tpoint,-0,10,facecolor='lightblue',linewidth=0.0)
+ax[0].fill_between(tpoint,-20,0,facecolor='deepskyblue',linewidth=0.0)
+ax[0].set_xlim(min(bucket),max(bucket))
+ax[0].set_ylim(-10,40)
+ax[0].set_ylabel('Temp & Dew Pt. (C)')
+ax[0].plot(tpoint,temperature,'k-')
+ax[0].plot(tpoint,dewpoint,'b-')
 
-	ax[1].fill_between(tpoint,20,35,facecolor='lightcoral',linewidth=0.0)
-	ax[1].fill_between(tpoint,17.5,20,facecolor='lightsalmon',linewidth=0.0)
-	ax[1].fill_between(tpoint,0,17.5,facecolor='palegreen',linewidth=0.0)
-	#ax[1].set_xlim(-24,0)
-	ax[1].set_ylim(0,30)
-	ax[1].set_ylabel('Wind Speed (m/s)')
-	ax[1].plot(tpoint,wind_speed_avg,'k-')
+ax[1].fill_between(tpoint,20,35,facecolor='lightcoral',linewidth=0.0)
+ax[1].fill_between(tpoint,17.5,20,facecolor='lightsalmon',linewidth=0.0)
+ax[1].fill_between(tpoint,0,17.5,facecolor='palegreen',linewidth=0.0)
+ax[1].set_xlim(min(bucket),max(bucket))
+ax[1].set_ylim(0,30)
+ax[1].set_ylabel('Wind Speed (m/s)')
+ax[1].plot(tpoint,wind_speed_avg,'k-')
 
-	ax[2].fill_between(tpoint,70,100,facecolor='lightcoral',linewidth=0.0)
-	ax[2].fill_between(tpoint,65,70,facecolor='lightsalmon',linewidth=0.0)
-	ax[2].fill_between(tpoint,0,65,facecolor='palegreen',linewidth=0.0)
-	ax[2].set_xlim(-24,0)
-	ax[2].set_ylim(0,100)
-	ax[2].set_ylabel('Humidity (%)')
-	ax[2].plot(tpoint,humidity,'k-')
+ax[2].fill_between(tpoint,70,100,facecolor='lightcoral',linewidth=0.0)
+ax[2].fill_between(tpoint,65,70,facecolor='lightsalmon',linewidth=0.0)
+ax[2].fill_between(tpoint,0,65,facecolor='palegreen',linewidth=0.0)
+ax[2].set_xlim(min(bucket),max(bucket))
+ax[2].set_ylim(0,100)
+ax[2].set_ylabel('Humidity (%)')
+ax[2].plot(tpoint,humidity,'k-')
 
-	ax[3].fill_between(tpoint3,-20,0,facecolor='lightcoral',linewidth=0.0)
-	ax[3].fill_between(tpoint3,-25,-20,facecolor='lightsalmon',linewidth=0.0)
-	ax[3].fill_between(tpoint3,-30,-25,facecolor='lightblue',linewidth=0.0)
-	ax[3].fill_between(tpoint3,-60,-30,facecolor='deepskyblue',linewidth=0.0)
-	ax[3].set_xlim(-24,0)
-	ax[3].set_ylim(-60,0)
-	ax[3].set_ylabel('Sky Temp (C)')
-	ax[3].plot(tpoint3,sky_temp,'k-')
+ax[3].fill_between(tpoint3,-20,0,facecolor='lightcoral',linewidth=0.0)
+ax[3].fill_between(tpoint3,-25,-20,facecolor='lightsalmon',linewidth=0.0)
+ax[3].fill_between(tpoint3,-30,-25,facecolor='lightblue',linewidth=0.0)
+ax[3].fill_between(tpoint3,-60,-30,facecolor='deepskyblue',linewidth=0.0)
+ax[3].set_xlim(min(bucket),max(bucket))
+ax[3].set_ylim(-60,0)
+ax[3].set_ylabel('Sky Temp (C)')
+ax[3].plot(tpoint3,sky_temp,'k-')
 
-	ax[4].fill_between(tpoint2,200,800,facecolor='lightgrey',linewidth=0.0)
-	ax[4].fill_between(tpoint2,800,1200,facecolor='darkgrey',linewidth=0.0)
-	ax[4].set_xlim(-24,0)
-	ax[4].set_ylim(0,1100)
-	ax[4].set_ylabel('LDR')
-	ax[4].plot(tpoint2,ldr,'k-')
+ax[4].fill_between(tpoint2,200,800,facecolor='lightgrey',linewidth=0.0)
+ax[4].fill_between(tpoint2,800,1200,facecolor='darkgrey',linewidth=0.0)
+ax[4].set_xlim(min(bucket),max(bucket))
+ax[4].set_ylim(0,1100)
+ax[4].set_ylabel('LDR')
+ax[4].plot(tpoint2,ldr,'k-')
 
-	ax[5].plot(tpoint,(pressure-0.76)*1000,'k-')
-	ax[5].set_xlim(-24,0)
-	ax[5].set_ylabel('Pressure (+760 mbar)')
-	ax[5].set_xlabel('Hours ago')
+ax[5].plot(tpoint,(pressure-0.76)*1000,'k-')
+ax[5].set_xlim(min(bucket),max(bucket))
+ax[5].set_ylabel('Pressure (+760 mbar)')
+ax[5].set_xlabel('Hours from %s' % (t1.strftime('%Y-%m-%dT%H:%M:%S')))
 
-	pl.subplots_adjust(hspace=0.07)
-	pl.savefig('/home/ops/ngts/prism/monitor/img/current_weather.png',bbox_inches='tight')
+pl.subplots_adjust(hspace=0.07)
+pl.savefig('/home/ops/ngts/prism/monitor/img/weather_history.png',bbox_inches='tight')
+
+
