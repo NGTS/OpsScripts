@@ -31,8 +31,8 @@ def calculateGainReadNoise(pag,camera_id):
 	db=b1-b2
 	gain = ( (np.average(f1)+np.average(f2)) - (np.average(b1)+np.average(b2)) ) / (  np.std(df)**2 - np.std(db)**2  )
 	rn = ( gain * np.std(db) ) / np.sqrt(2.)
-	print('[PAG %d] Gain: %.3f' % (gain))
-	print('[PAG %d] ReadNoise: %.3f' % (rn))
+	print('[PAG %d] Gain: %.3f' % (pag,gain))
+	print('[PAG %d] ReadNoise: %.3f' % (pag,rn))
 	# plot
 	fig = pl.figure(1,figsize=(20,10))
 	ax = fig.add_subplot(1, 2, 1, xticks=[], yticks=[])
