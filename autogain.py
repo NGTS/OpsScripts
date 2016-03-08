@@ -5,6 +5,7 @@ import os, sys, time
 import glob as g
 import numpy as np
 import argparse as ap
+from astropy.io impot fits
 import matplotlib.pyplot as pl
 
 def argParse():
