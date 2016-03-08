@@ -49,7 +49,7 @@ pag={1: {811: 6},
 	4: {811: 4}}
 
 try:
-	exptime=pag[args.pag][args.camera_id]:
+	exptime=pag[args.pag][args.camera_id]
 except KeyError:
 	print "No stored settings for camera_id: %d with PAG: %d" % (args.camera_id,args.pag)
 	print "Exiting"
