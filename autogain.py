@@ -1,7 +1,7 @@
 # work out the LEDs + parked telescope exptimes for
 # each telescope
 
-import os, sys
+import os, sys, time
 import glob as g
 import numpy as np
 import argparse as ap
@@ -61,6 +61,8 @@ if os.path.exists(outdir) == False:
 	print "Making %s" % (outdir)
 	os.mkdir(outdir)
 # biases
+os.system('nglights off')
+time.sleep(15)
 os.system("/home/ops/ngts/imsequence/imsequence --fastcool --temperature -70 --holdtemp --outdir %s --sequence '2b' --gain %d" % (outdir,args.pag))
 os.chdir(outdir)
 t=g.glob('UNKNOWN*.fits')
@@ -75,4 +77,4 @@ for j in range(0,len(t)):
 	os.system('mv %s FLAT-PAG%d-%04d.fits' % (t[j],args.pag,j))
 
 # analyse and calculate the gain + read noise
-calculateGainReadNoise(args.pag)
+calculateGainReadNoise(args.pag,args.camera_id)
