@@ -28,9 +28,9 @@ def calculateGainReadNoise(pag,camera_id):
 	b2=np.array(fits.open(biases[1])[0].data[20:2028,40:2048]).astype(np.float)
 	df=f1-f2
 	db=b1-b2
-	g = ( (np.average(f1)+np.average(f2)) - (np.average(b1)+np.average(b2)) ) / (  np.std(df)**2 - np.std(db)**2  )
-	rn = ( g * np.std(db) ) / np.sqrt(2.)
-	print('[PAG %d] Gain: %.3f' % (g))
+	gain = ( (np.average(f1)+np.average(f2)) - (np.average(b1)+np.average(b2)) ) / (  np.std(df)**2 - np.std(db)**2  )
+	rn = ( gain * np.std(db) ) / np.sqrt(2.)
+	print('[PAG %d] Gain: %.3f' % (gain))
 	print('[PAG %d] ReadNoise: %.3f' % (rn))
 	# plot
 	fig = pl.figure(1,figsize=(20,10))
@@ -60,21 +60,30 @@ outdir='/local/z_jmcc/autogain/pag%d' % (args.pag)
 if os.path.exists(outdir) == False:
 	print "Making %s" % (outdir)
 	os.mkdir(outdir)
-# biases
-os.system('nglights off')
-time.sleep(15)
-os.system("/home/ops/ngts/imsequence/imsequence --fastcool --temperature -70 --holdtemp --outdir %s --sequence '2b' --gain %d" % (outdir,args.pag))
-os.chdir(outdir)
-t=g.glob('UNKNOWN*.fits')
-for j in range(0,len(t)):
-	os.system('mv %s BIAS-PAG%d-%04d.fits' % (t[j],args.pag,j))
 
-# flats
-os.system('nglights on')
-os.system("/home/ops/ngts/imsequence/imsequence --fastcool --temperature -70 --holdtemp --outdir %s --sequence '2i%d' --gain %d" % (outdir,exptime,args.pag))
-t=g.glob('UNKNOWN*.fits')
-for j in range(0,len(t)):
-	os.system('mv %s FLAT-PAG%d-%04d.fits' % (t[j],args.pag,j))
+os.chdir(outdir)
+# look for images first
+biases=g.glob('BIAS-%d-PAG%d*' % (args.camera_id,args.pag))
+flats=g.glob('FLAT-%d-PAG%d*' % (args.camera_id,args.pag))
+
+if len(biases) >= 2 and len(flats) >= 2:
+	print "Found frames, using them..."
+else:	 
+	print "Taking new frames..."
+	# biases
+	os.system('nglights off')
+	time.sleep(15)
+	os.system("/home/ops/ngts/imsequence/imsequence --fastcool --temperature -70 --holdtemp --outdir %s --sequence '2b' --gain %d" % (outdir,args.pag))
+	t=g.glob('UNKNOWN*.fits')
+	for j in range(0,len(t)):
+		os.system('mv %s BIAS-%d-PAG%d-%04d.fits' % (t[j],args.camera_id,args.pag,j))
+
+	# flats
+	os.system('nglights on')
+	os.system("/home/ops/ngts/imsequence/imsequence --fastcool --temperature -70 --holdtemp --outdir %s --sequence '2i%d' --gain %d" % (outdir,exptime,args.pag))
+	t=g.glob('UNKNOWN*.fits')
+	for j in range(0,len(t)):
+		os.system('mv %s FLAT-%d-PAG%d-%04d.fits' % (t[j],args.camera_id,args.pag,j))
 
 # analyse and calculate the gain + read noise
 calculateGainReadNoise(args.pag,args.camera_id)
