@@ -20,8 +20,8 @@ def argParse():
 args=argParse()
 
 def calculateGainReadNoise(pag,camera_id):
-	biases=g.glob('BIAS-PAG%d*' % (pag))
-	flats=g.glob('FLAT-PAG%d*' % (pag)) 
+	biases=g.glob('BIAS-%d-PAG%d*' % (camera_id,pag))
+	flats=g.glob('FLAT-%d-PAG%d*' % (camera_id,pag)) 
 	# load images, exclude 20 pixel boarder around the edge
 	f1=np.array(fits.open(flats[0])[0].data[20:2028,40:2048]).astype(np.float)
 	f2=np.array(fits.open(flats[1])[0].data[20:2028,40:2048]).astype(np.float)
