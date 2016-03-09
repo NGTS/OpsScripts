@@ -25,7 +25,7 @@ nx=np.where(abs(x)>0.5*5)
 ny=np.where(abs(y)>0.5*5)
 n=set(np.concatenate((nx[0],ny[0])))
 frac=(len(n)/len(x))*100.
-print "%.2f%% of points have AG error > 0.5 pixels"
+print "%.2f%% of points have AG error > 0.5 pixels" % (frac)
 
 
 # concatenate + set the two n's to see the total number of points with ag_res > 0.5 pixels
