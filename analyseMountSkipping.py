@@ -5,19 +5,19 @@ import argparse as ap
 
 def argParse():
 	parser=ap.ArgumentParser(description="Script to analyse the mount skipping frequency")
-	parser.add_argument('action_id',type=int,help="Action ID to analyse skipping frequency")
+	parser.add_argument('camera_id',type=int,help="Camera ID to analyse skipping frequency")
+	parser.add_argument('night',type=int,help="Night to analyse, e.g. 20160203")
 	return parser.parse_args()
 
 args=argParse()
-
 db=pymysql.connect(host='ds',db='ngts_ops')
-qry="SELECT x_error,y_error FROM autoguider_log WHERE action_id=%d" % (args.action_id)
+qry="SELECT image_id,start_time_utc,x_error,y_error,night FROM autoguider_log LEFT JOIN raw_image_list USING (image_id) WHERE camera_id=%d AND night='%s';" % (args.camera_id,args.night)
 x,y=[],[]
 with db.cursor() as cur:
 	cur.execute(qry)
 	for row in cur:
-		x.append(row[0])
-		y.append(row[1])
+		x.append(row[2])
+		y.append(row[3])
 x=np.array(x)
 y=np.array(y)
 
