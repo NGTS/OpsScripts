@@ -8,8 +8,10 @@ def argParse():
 	parser.add_argument('action_id',type=int,help="Action ID to analyse skipping frequency")
 	return parser.parse_args()
 
+args=argParse()
+
 db=pymysql.connect(host='ds',db='ngts_ops')
-qry="SELECT x,y FROM autoguider_log WHERE action_id=%d" % (action_id)
+qry="SELECT x,y FROM autoguider_log WHERE action_id=%d" % (args.action_id)
 x,y=[],[]
 with db.cursor() as cur:
 	cur.execute(qry)
