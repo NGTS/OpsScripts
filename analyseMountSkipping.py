@@ -11,7 +11,7 @@ def argParse():
 args=argParse()
 
 db=pymysql.connect(host='ds',db='ngts_ops')
-qry="SELECT x,y FROM autoguider_log WHERE action_id=%d" % (args.action_id)
+qry="SELECT x_error,y_error FROM autoguider_log WHERE action_id=%d" % (args.action_id)
 x,y=[],[]
 with db.cursor() as cur:
 	cur.execute(qry)
