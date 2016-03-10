@@ -38,14 +38,14 @@ def calculateGainReadNoise(pag,camera_id):
 	outfile.write('[PAG %d] ReadNoise: %.3f' % (pag,rn))
 	outfile.close()
 	# plot
-	fig = pl.figure(1,figsize=(20,10))
-	ax = fig.add_subplot(1, 2, 1, xticks=[], yticks=[])
-	ax.imshow(df,cmap=cm.afmhot,vmin=0.8*np.median(df),vmax=1.2*np.median(df),interpolation=None)
-	ax.set_title('F1 - F2')
-	ax = fig.add_subplot(1, 2, 2, xticks=[], yticks=[])
-	ax.set_title('B1 - B2')
-	ax.imshow(db,cmap=cm.afmhot,vmin=0.8*np.median(db),vmax=1.2*np.median(db),interpolation=None)
-	fig.savefig('autogain-%d-PAG%d.png' % (camera_id,pag),dpi=200)
+	#fig = pl.figure(1,figsize=(20,10))
+	#ax = fig.add_subplot(1, 2, 1, xticks=[], yticks=[])
+	#ax.imshow(df,cmap=cm.afmhot,vmin=0.8*np.median(df),vmax=1.2*np.median(df),interpolation=None)
+	#ax.set_title('F1 - F2')
+	#ax = fig.add_subplot(1, 2, 2, xticks=[], yticks=[])
+	#ax.set_title('B1 - B2')
+	#ax.imshow(db,cmap=cm.afmhot,vmin=0.8*np.median(db),vmax=1.2*np.median(db),interpolation=None)
+	#fig.savefig('autogain-%d-PAG%d.png' % (camera_id,pag),dpi=200)
 
 
 # exposure times for each pag
