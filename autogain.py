@@ -36,8 +36,8 @@ def calculateGainReadNoise(pag,camera_id):
 	outfile.write('| *PAG%d* |  |\n' % (pag))
 	outfile.write('| F1 Mean | %.2f |\n' % (np.average(f1)))
 	outfile.write('| F2 Mean | %.2f |\n' % (np.average(f2)))
-	outfile.write('| Gain | %.3f |\n' % (pag,gain))
-	outfile.write('| Read Noise | %.3f |\n' % (pag,rn))
+	outfile.write('| Gain | %.3f |\n' % (gain))
+	outfile.write('| Read Noise | %.3f |\n' % (rn))
 	outfile.close()
 	# plot
 	#fig = pl.figure(1,figsize=(20,10))
