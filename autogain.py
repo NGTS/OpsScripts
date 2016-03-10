@@ -33,9 +33,9 @@ def calculateGainReadNoise(pag,camera_id):
 	gain = ( (np.average(f1)+np.average(f2)) - (np.average(b1)+np.average(b2)) ) / (  np.std(df)**2 - np.std(db)**2  )
 	rn = ( gain * np.std(db) ) / np.sqrt(2.)
 	outfile=open('autogain.log','w')
-	outfile.write('F1 Mean: %.2f\tF2 Mean: %.2f' % (np.average(f1),np.average(f2)))
-	outfile.write('[PAG %d] Gain: %.3f' % (pag,gain))
-	outfile.write('[PAG %d] ReadNoise: %.3f' % (pag,rn))
+	outfile.write('F1 Mean: %.2f\tF2 Mean: %.2f\n' % (np.average(f1),np.average(f2)))
+	outfile.write('[PAG %d] Gain: %.3f\n' % (pag,gain))
+	outfile.write('[PAG %d] ReadNoise: %.3f\n' % (pag,rn))
 	outfile.close()
 	# plot
 	#fig = pl.figure(1,figsize=(20,10))
