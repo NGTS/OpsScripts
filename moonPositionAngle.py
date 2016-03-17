@@ -5,7 +5,7 @@ from astropy import units as u
 import numpy as np
 import pymysql
 
-db=pymysql.connect(host='ngts_db',db='ngts_ops')
+db=pymysql.connect(host='ngtsdb',db='ngts_ops')
 action_ids=np.array([107845,107922,108010])
 
 for i in action_ids:
