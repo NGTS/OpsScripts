@@ -9,6 +9,7 @@ import pymysql
 db=pymysql.connect(host='ngtsdb',db='ngts_ops')
 action_ids=np.array([107845,107922,108010])
 pos_dict=defaultdict(list)
+meds_dict=defaultdict(list)
 for i in action_ids:
 	position_angle,cmd_ra,cmd_dec,moon_ra,moon_dec=[],[],[],[],[]
 	qry="SELECT cmd_ra,cmd_dec,moon_ra,moon_dec FROM raw_image_list WHERE action_id=%d" % (i)
@@ -24,6 +25,6 @@ for i in action_ids:
 	for j in range(0,len(obj)):
 		position_angle.append(obj[j].position_angle(moon[j]).deg)
 	pos_dict[i]=position_angle
-
+	meds_dict[i]=np.median(position_angle)
 
 
