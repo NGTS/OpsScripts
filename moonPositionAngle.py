@@ -9,6 +9,7 @@ db=pymysql.connect(host='ngtsdb',db='ngts_ops')
 action_ids=np.array([107845,107922,108010])
 
 for i in action_ids:
+	cmd_ra,cmd_dec,moon_ra,moon_dec=[],[],[],[]
 	qry="SELECT cmd_ra,cmd_dec,moon_ra,moon_dec FROM raw_image_list WHERE action_id=%d" % (i)
 	with db.cursor() as cur:
 		cur.execute(qry)
