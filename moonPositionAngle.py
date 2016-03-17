@@ -21,8 +21,8 @@ for i in action_ids:
 			moon_dec.append(row[3])
 	obj=SkyCoord(cmd_ra*u.deg,cmd_dec*u.deg,frame='icrs')
 	moon=SkyCoord(moon_ra*u.deg,moon_dec*u.deg,frame='icrs')
-	for i in range(0,len(obj)):
-		position_angle.append(obj[i].position_angle(moon[i]).deg)
+	for j in range(0,len(obj)):
+		position_angle.append(obj[j].position_angle(moon[j]).deg)
 	pos_dict[i]=position_angle
 
 
