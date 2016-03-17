@@ -2,12 +2,13 @@
 # script to measure the position angle to the moon
 from astropy.coordinates import SkyCoord
 from astropy import units as u
+from collections import defaultdict
 import numpy as np
 import pymysql
 
 db=pymysql.connect(host='ngtsdb',db='ngts_ops')
 action_ids=np.array([107845,107922,108010])
-
+pos_dict=defaultdict(list)
 for i in action_ids:
 	position_angle,cmd_ra,cmd_dec,moon_ra,moon_dec=[],[],[],[],[]
 	qry="SELECT cmd_ra,cmd_dec,moon_ra,moon_dec FROM raw_image_list WHERE action_id=%d" % (i)
@@ -21,8 +22,8 @@ for i in action_ids:
 	obj=SkyCoord(cmd_ra*u.deg,cmd_dec*u.deg,frame='icrs')
 	moon=SkyCoord(moon_ra*u.deg,moon_dec*u.deg,frame='icrs')
 	for i in range(0,len(obj)):
-		position_angle.append(obj[i].position_angle(moon[i]))
-	print position_angle
+		position_angle.append(obj[i].position_angle(moon[i]).deg)
+	pos_dict[i]=position_angle
 
 
 
