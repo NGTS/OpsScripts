@@ -24,6 +24,6 @@ for i in action_ids:
 	moon=SkyCoord(moon_ra[len(cmd_ra)/2]*u.deg,moon_dec[len(cmd_ra)/2]*u.deg,frame='icrs')
 	position_angle=obj.position_angle(moon).deg
 	pos_dict[i]=position_angle
-
+	print "%d %.2f" % (i,position_angle)
 
 
