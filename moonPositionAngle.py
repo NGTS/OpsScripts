@@ -20,11 +20,10 @@ for i in action_ids:
 			cmd_dec.append(row[1])
 			moon_ra.append(row[2])
 			moon_dec.append(row[3])
-	obj=SkyCoord(cmd_ra*u.deg,cmd_dec*u.deg,frame='icrs')
-	moon=SkyCoord(moon_ra*u.deg,moon_dec*u.deg,frame='icrs')
-	for j in range(0,len(obj)):
-		position_angle.append(obj[j].position_angle(moon[j]).deg)
+	obj=SkyCoord(cmd_ra[len(cmd_ra)/2]*u.deg,cmd_dec[len(cmd_ra)/2]*u.deg,frame='icrs')
+	moon=SkyCoord(moon_ra[len(cmd_ra)/2]*u.deg,moon_dec[len(cmd_ra)/2]*u.deg,frame='icrs')
+	position_angle=obj.position_angle(moon).deg
 	pos_dict[i]=position_angle
-	meds_dict[i]=np.median(position_angle)
+
 
 
