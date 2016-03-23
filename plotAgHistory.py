@@ -30,22 +30,23 @@ x_delta=np.array(x_delta)/5.
 y_delta=np.array(y_delta)/5.
 
 # find night boundaries
-boundaries=[]
+boundaries,night_str=[],[]
 for i in range(0,len(night)-1):
 	if night[i+1] != night[i]:
 		boundaries.append(i+1)
-
+		night_str.append(night[i].strftime("%Y%m%d"))
 
 fig,ax=plt.subplots(2,1,sharex=True,figsize=(20,10))
 ax[0].plot(x_error,'r.',y_error,'b.',ms=1)
 ax[0].set_ylabel('AG Error (Pixels)')
 ax[0].legend(('X RMS: %.2f pix' % (np.std(x_error)),'Y RMS: %.2f pix' % (np.std(y_error))),loc='upper left')
 ax[0].set_ylim(-1,1)
-for k in boundaries:
-	ax[0].axvline(k,lw=1,ls='dashed',color='k')
+for k in range(0,len(boundaries)):
+	ax[0].axvline(boundaries[k],lw=1,ls='dashed',color='k')
+	ax[0].text(boundaries[k]-1000,-0.5,night_str[k],fontsize=12)
 ax[1].plot(x_delta,'r.',y_delta,'b.',ms=1)
 ax[1].set_ylabel('AG Correction (Pixels)')
-for k in boundaries:
-	ax[1].axvline(k,lw=1,ls='dashed',color='k')
+for k in range(0,len(boundaries)):
+	ax[1].axvline(boundaries[k],lw=1,ls='dashed',color='k')
 plt.subplots_adjust(hspace=0.05)
 plt.show()
