@@ -39,14 +39,14 @@ for i in range(0,len(night)-1):
 fig,ax=plt.subplots(2,1,sharex=True,figsize=(20,10))
 ax[0].plot(x_error,'r.',y_error,'b.',ms=1)
 ax[0].set_ylabel('AG Error (Pixels)')
-ax[0].legend(('X RMS: %.2f pix' % (np.std(x_error)),'Y RMS: %.2f pix' % (np.std(y_error))),loc='upper right',markersize=5)
+ax[0].legend(('X RMS: %.2f pix' % (np.std(x_error)),'Y RMS: %.2f pix' % (np.std(y_error))),loc='upper right',markerscale=5,scatterpoints=1)
 ax[0].set_ylim(-1,1)
 for k in range(0,len(boundaries)):
 	ax[0].axvline(boundaries[k],lw=1,ls='dashed',color='k')
 	ax[0].text(boundaries[k]-2000,-0.5,night_str[k],fontsize=12)
 ax[1].plot(x_delta,'r.',y_delta,'b.',ms=1)
 ax[1].set_ylabel('AG Correction (Pixels)')
-ax[1].legend(('X','Y'),loc='upper right',markersize=5)
+ax[1].legend(('X','Y'),loc='upper right',markerscale=5,scatterpoints=1)
 for k in range(0,len(boundaries)):
 	ax[1].axvline(boundaries[k],lw=1,ls='dashed',color='k')
 	ax[1].text(boundaries[k]-2000,2,night_str[k],fontsize=12)
