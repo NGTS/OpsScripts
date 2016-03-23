@@ -23,12 +23,16 @@ with db.cursor() as cur:
 		night.append(row[4])
 		start_time_utc.append(row[5])
 
-x_error=np.array(x_error)
-y_error=np.array(y_error)
-x_delta=np.array(x_delta)
-y_delta=np.array(y_delta)
+x_error=np.array(x_error)/5.
+y_error=np.array(y_error)/5.
+x_delta=np.array(x_delta)/5.
+y_delta=np.array(y_delta)/5.
 
 fig,ax=plt.subplots(2,1,sharex=True,figsize=(20,10))
 ax[0].plot(x_error,'r.',y_error,'b.')
+ax[0].set_ylabel('AG Error (Pixels)')
+ax[0].legend(('X RMS: %.2f pix' % (np.std(x_error)),'Y RMS: %.2f pix' % (np.std(y_error))),loc='upper left')
+ax[0].set_ylim(-1,1)
 ax[1].plot(x_delta,'r.',y_delta,'b.')
+ax[0].set_ylabel('AG Correction (Pixels)')
 plt.show()
