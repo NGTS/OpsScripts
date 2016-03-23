@@ -53,5 +53,7 @@ for k in range(0,len(boundaries)):
 	ax[1].text(boundaries[k]-2250,2,night_str[k],fontsize=12)
 ax[1].set_ylim(-15,5)
 ax[1].set_xlim(0,len(x_error))
+ax[1].set_xlabel('Image Number')
 plt.subplots_adjust(hspace=0.05)
-plt.show()
+fig.savefig('AgResiduals_802_March2016.png',dpi=300,bbox_inches='tight')
+#plt.show()
