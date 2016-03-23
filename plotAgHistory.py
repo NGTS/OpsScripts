@@ -8,6 +8,7 @@ import pymysql
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.rcParams.update({'font.size': 20})
 camera_id=802
 
 db=pymysql.connect(host='ngtsdb',db='ngts_ops')
@@ -44,13 +45,13 @@ ax[0].set_ylim(-1,1)
 ax[0].set_xlim(0,len(x_error))
 for k in range(0,len(boundaries)):
 	ax[0].axvline(boundaries[k],lw=1,ls='dashed',color='k')
-	ax[0].text(boundaries[k]-2250,0.5,night_str[k],fontsize=12)
+	ax[0].text(boundaries[k]-2250,0.5,night_str[k],fontsize=16)
 
 ax[1].plot(x_delta,'r.',y_delta,'b.',ms=1)
 ax[1].set_ylabel('AG Correction (Pixels)')
 for k in range(0,len(boundaries)):
 	ax[1].axvline(boundaries[k],lw=1,ls='dashed',color='k')
-	ax[1].text(boundaries[k]-2250,2,night_str[k],fontsize=12)
+	ax[1].text(boundaries[k]-2250,2,night_str[k],fontsize=16)
 ax[1].set_ylim(-15,5)
 ax[1].set_xlim(0,len(x_error))
 ax[1].set_xlabel('Image Number')
