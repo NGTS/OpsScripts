@@ -27,3 +27,8 @@ x_error=np.array(x_error)
 y_error=np.array(y_error)
 x_delta=np.array(x_delta)
 y_delta=np.array(y_delta)
+
+fig,ax=plt.subplots(1,2,figsize=(20,10))
+ax[0].plot(x_error,'r.',y_error,'b.')
+ax[1].plot(x_delta,'r.',y_delta,'b.')
+plt.show()
