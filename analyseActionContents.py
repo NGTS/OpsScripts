@@ -10,5 +10,5 @@ for i in actions:
         for row in cur:
             meds.append(float(row[0]))
         meds = np.array(meds)
-    print('Median of action_id {0:d} = {1:.2f}'.format(i, np.median(meds))
+    print('Median of action_id {0:d} = {1:.2f}'.format(i, np.median(meds)))
 
