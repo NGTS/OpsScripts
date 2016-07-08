@@ -28,7 +28,7 @@ db_pipe = pymysql.connect(host='ngtsdb', db='ngts_pipe')
 field_id = 'NG2100-4748'
 
 ops_qry = """SELECT
-    action_id, night
+    a.action_id, night
     FROM
     action_list AS a
     INNER JOIN action_args AS aa
