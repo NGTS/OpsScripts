@@ -32,7 +32,7 @@ ops_qry = """SELECT
     FROM
     action_list AS a
     INNER JOIN action_args AS aa
-    ON a.action_list=aa.action_list
+    ON a.action_id=aa.action_id
     WHERE
     arg_key='field' AND
     arg_value='{0:s}'""".format(field_id)
