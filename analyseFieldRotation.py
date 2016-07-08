@@ -42,7 +42,7 @@ action_id, night = [], []
 image_id = defaultdict(list)
 with db_ops.cursor() as ops_cur:
     ops_cur.execute(ops_qry)
-    for row in cur:
+    for row in ops_cur:
         action_id.append(row[0])
         night.append(Time(row[1], format='iso', scale='utc'))
         print(row)
