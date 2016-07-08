@@ -23,8 +23,8 @@ import astropy.units as u
 
 
 # connect to the different dbs
-db_ops = pymysql.connect(host='ngtsdb', db='ngts_ops')
-db_pipe = pymysql.connect(host='ngtsdb', db='ngts_pipe')
+ops_db = pymysql.connect(host='ngtsdb', db='ngts_ops')
+pipe_db = pymysql.connect(host='ngtsdb', db='ngts_pipe')
 field_id = 'NG2100-4748'
 
 ops_qry = """SELECT
@@ -38,13 +38,26 @@ ops_qry = """SELECT
     arg_value='{0:s}'""".format(field_id)
 print(ops_qry)
 
-action_id, night = [], []
-image_id = defaultdict(list)
-with db_ops.cursor() as ops_cur:
+action_ids, night = [], []
+image_ids = defaultdict(list)
+with ops_db.cursor() as ops_cur:
     ops_cur.execute(ops_qry)
     for row in ops_cur:
-        action_id.append(row[0])
+        action_ids.append(int(row[0]))
         night.append(Time(str(row[1]), format='iso', in_subfmt='date', scale='utc'))
-        print(row)
 
+print("Found {0:d} actions for {1:s}".format(len(action_ids), field_id))
 # now loop over all the actions and get the image_ids and WCS info
+for action in action_ids:
+    image_qry = """SELECT
+                image_id
+                FROM
+                raw_image_list
+                WHERE
+                action_id={0:d}
+                ORDER BY image_id ASC""".format(action)
+    with ops_db.cursor() as ops_cur:
+        ops_cur.execute(image_qry)
+        for row in ops_cur:
+            image_ids[action].append(row[0])
+
