@@ -44,7 +44,7 @@ with db_ops.cursor() as ops_cur:
     ops_cur.execute(ops_qry)
     for row in ops_cur:
         action_id.append(row[0])
-        night.append(Time(row[1], format='datetime', scale='utc'))
+        night.append(Time(str(row[1]), format='iso', in_subfmt='date', scale='utc'))
         print(row)
 
 # now loop over all the actions and get the image_ids and WCS info
