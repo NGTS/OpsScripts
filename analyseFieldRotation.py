@@ -27,6 +27,11 @@ ops_db = pymysql.connect(host='ngtsdb', db='ngts_ops')
 pipe_db = pymysql.connect(host='ngtsdb', db='ngts_pipe')
 field_id = 'NG2100-4748'
 
+# store results here
+action_ids, night = [], []
+image_ids = defaultdict(list)
+cd_matrix = defaultdict(list)
+
 ops_qry = """SELECT
     a.action_id, night
     FROM
@@ -36,10 +41,6 @@ ops_qry = """SELECT
     WHERE
     arg_key='field' AND
     arg_value='{0:s}'""".format(field_id)
-print(ops_qry)
-
-action_ids, night = [], []
-image_ids = defaultdict(list)
 with ops_db.cursor() as ops_cur:
     ops_cur.execute(ops_qry)
     for row in ops_cur:
@@ -56,8 +57,24 @@ for action in action_ids:
                 WHERE
                 action_id={0:d}
                 ORDER BY image_id ASC""".format(action)
+    # get the image IDs
     with ops_db.cursor() as ops_cur:
         ops_cur.execute(image_qry)
         for row in ops_cur:
             image_ids[action].append(row[0])
 
+            pipe_qry = """SELECT
+                        cd1_1, cd1_2, cd2_1, cd2_2
+                        FROM
+                        image_wcsfit
+                        WHERE
+                        image_id={0:d}""".format(int(row[0]))
+
+            # now get the CD matrix
+            with pipe_db.cursor() as pipe_cur:
+                pipe_cur.execute(pipe_qry)
+                for pipe_row in pipe_cur:
+                    cd_matrix[action].append(np.array(pipe_row))
+
+    # stack the CD arrays into one nice numpy array
+    cd_matrix[action] = np.vstack(cd_matrix[action])
