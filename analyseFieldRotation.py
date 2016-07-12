@@ -68,19 +68,20 @@ qry = """
 
 with db.cursor() as cur:
     length = cur.execute(qry)
-    cd11 = np.empty(length)
-    cd12 = np.empty(length)
-    cd21 = np.empty(length)
-    cd22 = np.empty(length)
-    i = 0
     for row in cur:
-        image_id.append(row[0])
-        times.append(Time(row[1], format='datetime', scale='utc').jd)
-        cd11[i] = float(row[2])
-        cd12[i] = float(row[3])
-        cd21[i] = float(row[4])
-        cd22[i] = float(row[5])
-        i += 1
+        if row[2] and row[3] and row[4] and row[5]:
+            image_id.append(row[0])
+            times.append(Time(row[1], format='datetime', scale='utc').jd)
+            cd11.append(row[2])
+            cd12.append(row[3])
+            cd21.append(row[4])
+            cd22.append(row[5])
+
+# make numpy arrays
+cd11 = np.array(cd11)
+cd12 = np.array(cd12)
+cd21 = np.array(cd21)
+cd22 = np.array(cd22)
 
 # set up a figure for plotting
 fig=plt.figure(1,figsize=(15,15))
