@@ -71,7 +71,7 @@ for action in action_ids:
         ops_cur.execute(image_qry)
         for row in ops_cur:
             image_ids[action].append(row[0])
-            start_times[action].append(row[1])
+            start_times[action].append(Time(row[1], format='datetime', scale='utc'))
             pipe_qry = """SELECT
                         cd1_1, cd1_2, cd2_1, cd2_2
                         FROM
@@ -88,29 +88,29 @@ for action in action_ids:
                 else:
                     print('No images analysed for {0:d}'.format(action))
 
-    # stack the CD arrays into one nice numpy array
-    # but only if there are images stored in there
-    #if len(cd_matrix[action]) > 0:
-    #    cd_matrix[action] = np.vstack(cd_matrix[action])
+# stack the CD arrays into one nice numpy array
+# transpose for plotting
+for action in cd_matrix:
+    cd_matrix[action] = np.vstack(cd_matrix[action]).T
 
 # set up a figure for plotting
-#fig=plt.figure(1,figsize=(15,15))
-#ax11=plt.subplot2grid((4,4),(0,0),colspan=2,rowspan=2)
-#ax12=plt.subplot2grid((4,4),(0,2),colspan=2,rowspan=2)
-#ax21=plt.subplot2grid((4,4),(2,0),colspan=2,rowspan=2)
-#ax22=plt.subplot2grid((4,4),(2,2),colspan=2,rowspan=2)
-#
-#for action in cd_matrix:
-#    rot1_1 = math.acos(cd_matrix[action][0]/cdelta)
-#    rot1_2 = math.asin(cd_matrix[action][1]/cdelta)
-#    rot2_1 = math.asin(cd_matrix[action][2]/cdelta)
-#    rot2_2 = math.acos(cd_matrix[action][3]/cdelta)
-#
-#    # not plot all the rotations in a 2x2 grid
-#    # 1 rot calc per grid, showing all values over time
-#    ax11.plot(start_times[action], rot1_1, 'k.')
-#    ax12.plot(start_times[action], rot1_2, 'k.')
-#    ax21.plot(start_times[action], rot2_1, 'k.')
-#    ax22.plot(start_times[action], rot2_2, 'k.')
-#
-#plt.show()
+fig=plt.figure(1,figsize=(15,15))
+ax11=plt.subplot2grid((4,4),(0,0),colspan=2,rowspan=2)
+ax12=plt.subplot2grid((4,4),(0,2),colspan=2,rowspan=2)
+ax21=plt.subplot2grid((4,4),(2,0),colspan=2,rowspan=2)
+ax22=plt.subplot2grid((4,4),(2,2),colspan=2,rowspan=2)
+
+for action in cd_matrix:
+    rot1_1 = np.acos(np.radians(cd_matrix[action][0]/cdelta))
+    rot1_2 = np.asin(np.radians(cd_matrix[action][1]/cdelta))
+    rot2_1 = np.asin(np.radians(cd_matrix[action][2]/cdelta))
+    rot2_2 = np.acos(np.radians(cd_matrix[action][3]/cdelta))
+
+    # not plot all the rotations in a 2x2 grid
+    # 1 rot calc per grid, showing all values over time
+    ax11.plot(start_times[action].jd, rot1_1, 'k.')
+    ax12.plot(start_times[action].jd, rot1_2, 'k.')
+    ax21.plot(start_times[action].jd, rot2_1, 'k.')
+    ax22.plot(start_times[action].jd, rot2_2, 'k.')
+
+plt.show()
