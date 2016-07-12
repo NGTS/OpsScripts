@@ -75,7 +75,7 @@ for action in action_ids:
             for row_prod in pipe_cur:
                 prod_ids[action]=int(row_prod[0])
         else:
-            print('NO {0:s} PROD_ID FOR {1:d}'.format(release, int(action)))
+            print('NO {0:s} PROD_ID FOR {0:d}'.format(release, int(action)))
             continue
 
     # now get the WCS info for that action and data release number
