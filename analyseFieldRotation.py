@@ -77,7 +77,7 @@ for action in action_ids:
             for row in pipe_cur:
                 prod_ids[action]=int(row[0])
         else:
-            print('NO {0:s} PROD_ID FOR {1:d}'.format(release, int(action))
+            print('NO {0:s} PROD_ID FOR {1:d}'.format(release, int(action)))
             continue
 
     image_qry = """SELECT
