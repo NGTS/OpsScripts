@@ -68,7 +68,7 @@ for action in action_ids:
                 FROM
                 photpipe_prod
                 WHERE action_id={0:d}
-                AND tag={1:s}
+                AND tag='{1:s}'
                 LIMIT 1
                 """.format(int(action), release)
     with pipe_db.cursor() as pipe_cur:
