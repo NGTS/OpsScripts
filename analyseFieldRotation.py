@@ -93,7 +93,7 @@ for action in action_ids:
         if return_length > 0:
             for pipe_row in pipe_cur:
                 image_ids[action].append(pipe_row[0])
-                cd_matrix[action].append(list(pipe_row[1],pipe_row[2],pipe_row[3],pipe_row[4]))
+                cd_matrix[action].append([pipe_row[1],pipe_row[2],pipe_row[3],pipe_row[4]])
             #print('Found {0:d} WCS values for action {1:d}'.format(return_length, action))
         else:
             print('No WCS for {0:d} [{1:d} {2:d}]'.format(int(row[0]),prod_ids[action],action))
