@@ -74,12 +74,13 @@ for action in action_ids:
     with pipe_db.cursor() as pipe_cur:
         n_prod = pipe_cur.execute(prod_qry)
         if n_prod > 0:
-            for row in pipe_cur:
-                prod_ids[action]=int(row[0])
+            for row_prod in pipe_cur:
+                prod_ids[action]=int(row_prod[0])
         else:
             print('NO {0:s} PROD_ID FOR {1:d}'.format(release, int(action)))
             continue
 
+    # now get all the image_ids for the images in each action
     image_qry = """SELECT
                 image_id, start_time_utc
                 FROM
@@ -92,7 +93,7 @@ for action in action_ids:
         ops_cur.execute(image_qry)
         for row in ops_cur:
             image_ids[action].append(row[0])
-            start_times[action].append(Time(row[1], format='datetime', scale='utc'))
+            start_times[action].append(Time(row[1], format='datetime', scale='utc').jd)
             pipe_qry = """SELECT
                         cd1_1, cd1_2, cd2_1, cd2_2
                         FROM
@@ -102,6 +103,7 @@ for action in action_ids:
                         AND
                         prod_id={1:d}""".format(int(row[0]), prod_ids[action])
 
+            # with the image_ids,
             # now get the CD matrix
             with pipe_db.cursor() as pipe_cur:
                 return_length = pipe_cur.execute(pipe_qry)
@@ -132,9 +134,9 @@ for action in cd_matrix:
 
     # not plot all the rotations in a 2x2 grid
     # 1 rot calc per grid, showing all values over time
-    ax11.plot(start_times[action].jd, rot1_1, 'k.')
-    ax12.plot(start_times[action].jd, rot1_2, 'k.')
-    ax21.plot(start_times[action].jd, rot2_1, 'k.')
-    ax22.plot(start_times[action].jd, rot2_2, 'k.')
+    ax11.plot(start_times[action], rot1_1, 'k.')
+    ax12.plot(start_times[action], rot1_2, 'k.')
+    ax21.plot(start_times[action], rot2_1, 'k.')
+    ax22.plot(start_times[action], rot2_2, 'k.')
 
 plt.show()
