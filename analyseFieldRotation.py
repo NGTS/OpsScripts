@@ -32,7 +32,7 @@ ops_db = pymysql.connect(host='ngtsdb', db='ngts_ops')
 pipe_db = pymysql.connect(host='ngtsdb', db='ngts_pipe')
 
 # globals
-field_id = 'NG2100-4748'
+field_id = 'NG0409-1941'
 cdelta = 4.98
 
 # store results here
