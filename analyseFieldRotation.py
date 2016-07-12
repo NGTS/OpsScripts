@@ -100,7 +100,7 @@ for action in action_ids:
                         WHERE
                         image_id={0:d}
                         AND
-                        prod_id={1:d}""".format(int(row[0], prod_ids[action]))
+                        prod_id={1:d}""".format(int(row[0]), prod_ids[action])
 
             # now get the CD matrix
             with pipe_db.cursor() as pipe_cur:
