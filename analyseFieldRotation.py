@@ -34,6 +34,7 @@ pipe_db = pymysql.connect(host='ngtsdb', db='ngts_pipe')
 # globals
 field_id = 'NG0409-1941'
 cdelta = 4.98
+release = 'TEST16'
 
 # store results here
 action_ids, night = [], []
@@ -54,11 +55,31 @@ with ops_db.cursor() as ops_cur:
     ops_cur.execute(ops_qry)
     for row in ops_cur:
         action_ids.append(int(row[0]))
-        night.append(Time(str(row[1]), format='iso', in_subfmt='date', scale='utc'))
+        night.append(Time(str(row[1]), format='iso', in_subfmt='date', scale='utc').jd)
 
 print("Found {0:d} actions for {1:s}".format(len(action_ids), field_id))
 # now loop over all the actions and get the image_ids and WCS info
 for action in action_ids:
+
+    # get the prod_ids for the newest release
+    prod_ids = {}
+    prod_qry = """SELECT
+                prod_id
+                FROM
+                photpipe_prod
+                WHERE action_id={0:d}
+                AND tag={1:s}
+                LIMIT 1
+                """.format(int(action), release)
+    with pipe_db.cursor() as pipe_cur:
+        n_prod = pipe_cur.execute(prod_qry)
+        if n_prod > 0:
+            for row in pipe_cur:
+                prod_ids[action]=int(row[0])
+        else:
+            print('NO {0:s} PROD_ID FOR {1:d}'.format(release, int(action))
+            continue
+
     image_qry = """SELECT
                 image_id, start_time_utc
                 FROM
@@ -77,7 +98,9 @@ for action in action_ids:
                         FROM
                         image_wcsfit
                         WHERE
-                        image_id={0:d}""".format(int(row[0]))
+                        image_id={0:d}
+                        AND
+                        prod_id={1:d}""".format(int(row[0], prod_ids[action]))
 
             # now get the CD matrix
             with pipe_db.cursor() as pipe_cur:
