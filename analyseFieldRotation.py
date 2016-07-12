@@ -43,7 +43,7 @@ start_times = defaultdict(list)
 cd_matrix = defaultdict(list)
 
 ops_qry = """SELECT
-    a.action_id, night
+    a.action_id
     FROM
     action_list AS a
     INNER JOIN action_args AS aa
@@ -55,12 +55,10 @@ with ops_db.cursor() as ops_cur:
     ops_cur.execute(ops_qry)
     for row in ops_cur:
         action_ids.append(int(row[0]))
-        night.append(Time(str(row[1]), format='iso', in_subfmt='date', scale='utc').jd)
 
 print("Found {0:d} actions for {1:s}".format(len(action_ids), field_id))
-# now loop over all the actions and get the image_ids and WCS info
+# now loop over all the actions and get the WCS info
 for action in action_ids:
-
     # get the prod_ids for the newest release
     prod_ids = {}
     prod_qry = """SELECT
@@ -80,39 +78,39 @@ for action in action_ids:
             print('NO {0:s} PROD_ID FOR {1:d}'.format(release, int(action)))
             continue
 
-    # now get all the image_ids for the images in each action
-    image_qry = """SELECT
-                image_id, start_time_utc
+    # now get the WCS info for that action and data release number
+    pipe_qry = """SELECT
+                image_id, cd1_1, cd1_2, cd2_1, cd2_2
                 FROM
-                raw_image_list
+                image_wcsfit
                 WHERE
-                action_id={0:d}
-                ORDER BY image_id ASC""".format(action)
-    # get the image IDs
-    with ops_db.cursor() as ops_cur:
-        ops_cur.execute(image_qry)
-        for row in ops_cur:
-            image_ids[action].append(row[0])
-            start_times[action].append(Time(row[1], format='datetime', scale='utc').jd)
-            pipe_qry = """SELECT
-                        cd1_1, cd1_2, cd2_1, cd2_2
-                        FROM
-                        image_wcsfit
-                        WHERE
-                        image_id={0:d}
-                        AND
-                        prod_id={1:d}""".format(int(row[0]), prod_ids[action])
+                prod_id={1:d}""".format(prod_ids[action])
 
-            # with the image_ids,
-            # now get the CD matrix
-            with pipe_db.cursor() as pipe_cur:
-                return_length = pipe_cur.execute(pipe_qry)
-                if return_length > 0:
-                    for pipe_row in pipe_cur:
-                        cd_matrix[action].append(list(pipe_row))
-                    print('Found {0:d} WCS values for action {1:d}'.format(return_length, action))
-                else:
-                    print('No WCS for {0:d} [{1:d}]'.format(int(row[0]),action))
+    # with the image_ids,
+    # now get the CD matrix
+    with pipe_db.cursor() as pipe_cur:
+        return_length = pipe_cur.execute(pipe_qry)
+        if return_length > 0:
+            for pipe_row in pipe_cur:
+                image_ids[action].append(pipe_row[0])
+                cd_matrix[action].append(list(pipe_row[1],pipe_row[2],pipe_row[3],pipe_row[4]))
+            #print('Found {0:d} WCS values for action {1:d}'.format(return_length, action))
+        else:
+            print('No WCS for {0:d} [{1:d} {2:d}]'.format(int(row[0]),prod_ids[action],action))
+
+    # now get the times for the images with WCS
+    for i in range(0,len(image_ids[action])):
+        image_qry = """SELECT
+                    start_time_utc
+                    FROM
+                    raw_image_list
+                    WHERE
+                    image_id = {0:d}""".format(int(image_ids[action][i]))
+        # get the image IDs
+        with ops_db.cursor() as ops_cur:
+            ops_cur.execute(image_qry)
+            for row in ops_cur:
+                start_times[action].append(Time(row[0], format='datetime', scale='utc').jd)
 
 # stack the CD arrays into one nice numpy array
 # transpose for plotting
