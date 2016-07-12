@@ -85,8 +85,9 @@ for action in action_ids:
                 if return_length > 0:
                     for pipe_row in pipe_cur:
                         cd_matrix[action].append(list(pipe_row))
+                    print('Found {0:d} WCS values for action {1:d}'.format(return_length, action))
                 else:
-                    print('No images analysed for {0:d}'.format(action))
+                    print('No WCS for {0:d} [{1:d}]'.format(int(row[0]),action))
 
 # stack the CD arrays into one nice numpy array
 # transpose for plotting
@@ -101,10 +102,10 @@ ax21=plt.subplot2grid((4,4),(2,0),colspan=2,rowspan=2)
 ax22=plt.subplot2grid((4,4),(2,2),colspan=2,rowspan=2)
 
 for action in cd_matrix:
-    rot1_1 = np.acos(np.radians(cd_matrix[action][0]/cdelta))
-    rot1_2 = np.asin(np.radians(cd_matrix[action][1]/cdelta))
-    rot2_1 = np.asin(np.radians(cd_matrix[action][2]/cdelta))
-    rot2_2 = np.acos(np.radians(cd_matrix[action][3]/cdelta))
+    rot1_1 = np.arccos(np.radians(cd_matrix[action][0]/cdelta))
+    rot1_2 = np.arcsin(np.radians(cd_matrix[action][1]/cdelta))
+    rot2_1 = np.arcsin(np.radians(cd_matrix[action][2]/cdelta))
+    rot2_2 = np.arccos(np.radians(cd_matrix[action][3]/cdelta))
 
     # not plot all the rotations in a 2x2 grid
     # 1 rot calc per grid, showing all values over time
