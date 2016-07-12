@@ -84,14 +84,14 @@ for action in action_ids:
                 return_length = pipe_cur.execute(pipe_qry)
                 if return_length > 0:
                     for pipe_row in pipe_cur:
-                        cd_matrix[action].append(np.array(pipe_row))
+                        cd_matrix[action].append(list(pipe_row))
                 else:
                     print('No images analysed for {0:d}'.format(action))
 
     # stack the CD arrays into one nice numpy array
     # but only if there are images stored in there
-    if len(cd_matrix[action]) > 0:
-        cd_matrix[action] = np.vstack(cd_matrix[action])
+    #if len(cd_matrix[action]) > 0:
+    #    cd_matrix[action] = np.vstack(cd_matrix[action])
 
 # set up a figure for plotting
 #fig=plt.figure(1,figsize=(15,15))
