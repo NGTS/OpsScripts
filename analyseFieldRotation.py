@@ -84,7 +84,7 @@ for action in action_ids:
                 FROM
                 image_wcsfit
                 WHERE
-                prod_id={1:d}""".format(prod_ids[action])
+                prod_id={0:d}""".format(prod_ids[action])
 
     # with the image_ids,
     # now get the CD matrix
