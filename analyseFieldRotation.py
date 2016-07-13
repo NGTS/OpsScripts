@@ -142,8 +142,10 @@ def plotCDMatrixFromField(field_id, release, camera_id):
 
 if __name__ == '__main__':
     cameras = getSurveyFields()
-    #for i in cameras:
-    #    for j in cameras[i]:
-    #    plotCDMatrixFromField(j[0], release, i)
-    plotCDMatrixFromField(cameras[801][0][0], release, 801)
+    c=1
+    for i in cameras:
+        for j in cameras[i]:
+            print('{0:d} Plotting CD Matrix for {1:d} - {2:s}'.format(c, i, j[0]))
+            plotCDMatrixFromField(j[0], release, i)
+            c += 1
 
