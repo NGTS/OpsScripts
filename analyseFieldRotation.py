@@ -10,6 +10,8 @@ import math
 import pymysql
 from collections import defaultdict
 import numpy as np
+import matplotlib
+matplotlib.use('Agg') # Do not require x forwarding to render static files
 import matplotlib.pyplot as plt
 from astropy.time import Time
 import astropy.units as u
