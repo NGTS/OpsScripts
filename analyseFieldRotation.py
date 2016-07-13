@@ -139,7 +139,7 @@ def plotCDMatrixFromField(field_id, release, camera_id):
     ax22.set_xlabel('Days since day 0')
     plt.savefig('{0:s}{1:s}.png'.format(outdir, outname))
 
-if __name__ == 'main':
+if __name__ == '__main__':
     cameras = getSurveyFields()
     #for i in cameras:
     #    for j in cameras[i]:
