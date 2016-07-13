@@ -13,6 +13,9 @@ import matplotlib.pyplot as plt
 from astropy.time import Time
 import astropy.units as u
 
+# connect to the different dbs
+db = pymysql.connect(host='ngtsdb', db='ngts_ops')
+
 def fitQuad(x, y):
     """
     Generic function to fit 2D polynomial
@@ -27,10 +30,26 @@ def getSurveyFields():
     """
     Code to grab all the survey fields to check for rotation
     """
-    pass
-
-# connect to the different dbs
-db = pymysql.connect(host='ngtsdb', db='ngts_ops')
+    qry = """
+        SELECT
+        field,
+        camera_id,
+        first_night,
+        last_night,
+        num_nights
+        FROM
+        field_summary
+        WHERE
+        campaign LIKE '20%'
+        """
+    cameras = defaultdict(list)
+    with db.cursor() as cur:
+        cur.execute(qry)
+        for row in cur:
+            first_night = Time(row[2], format='datetime', scale='utc')
+            last_night = Time(row[3], format='datetime', scale='utc')
+            cameras[int(row[1])].append([row[0], first_night, last_night, int(row[4])])
+    return cameras
 
 # globals
 field_id = 'NG0409-1941'
