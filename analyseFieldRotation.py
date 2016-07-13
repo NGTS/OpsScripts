@@ -102,14 +102,18 @@ def plotCDMatrixFromField(field_id, release, camera_id):
 
     with db.cursor() as cur:
         length = cur.execute(qry)
-        for row in cur:
-            if row[2] and row[3] and row[4] and row[5]:
-                image_id.append(row[0])
-                times.append(Time(row[1], format='datetime', scale='utc').jd)
-                cd11.append(row[2])
-                cd12.append(row[3])
-                cd21.append(row[4])
-                cd22.append(row[5])
+        if length > 0:
+            for row in cur:
+                if row[2] and row[3] and row[4] and row[5]:
+                    image_id.append(row[0])
+                    times.append(Time(row[1], format='datetime', scale='utc').jd)
+                    cd11.append(row[2])
+                    cd12.append(row[3])
+                    cd21.append(row[4])
+                    cd22.append(row[5])
+        else:
+            print('No CD Matrix data for {0:s}'.format(field_id))
+            return
 
     # make numpy arrays
     times = np.array(times)
