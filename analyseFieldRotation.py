@@ -64,7 +64,7 @@ def plotCDMatrixFromField(field_id, release, camera_id):
     """
     outname = "{0:s}-{1:d}-{2:s}.png".format(field_id, camera_id, release)
     outdir = '{0:s}/{1:d}/'.format(filestore, camera_id)
-    if not os.path.exists(outdir)
+    if not os.path.exists(outdir):
         os.mkdir(outdir)
 
     # store results here
