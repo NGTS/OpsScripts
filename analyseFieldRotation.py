@@ -78,7 +78,7 @@ with db.cursor() as cur:
             cd22.append(row[5])
 
 # make numpy arrays
-time = np.array(times)
+times = np.array(times)
 cd11 = np.array(cd11)
 cd12 = np.array(cd12)
 cd21 = np.array(cd21)
