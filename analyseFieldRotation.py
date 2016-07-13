@@ -2,6 +2,8 @@
 """
 Code to grab the CD matrices from a field's
 images and look for rotation
+
+Look at how astrometry.net calculates the rotation
 """
 import math
 import pymysql
@@ -105,16 +107,16 @@ ax11=plt.subplot2grid((4,4),(0,0),colspan=2,rowspan=2)
 ax12=plt.subplot2grid((4,4),(0,2),colspan=2,rowspan=2, sharex=ax11)
 ax21=plt.subplot2grid((4,4),(2,0),colspan=2,rowspan=2, sharex=ax11)
 ax22=plt.subplot2grid((4,4),(2,2),colspan=2,rowspan=2, sharex=ax11)
-ax11.plot(times, rot11/np.median(rot11), 'k.')# tcd11, cd11_fit, 'r-')
+ax11.plot(times, rot11-np.median(rot11), 'k.')# tcd11, cd11_fit, 'r-')
 ax11.set_title('CD1_1 Rot')
-ax11.set_ylabel('Rot / median(rot)')
-ax12.plot(times, rot12/np.median(rot12), 'k.') # tcd12, cd12_fit, 'r-')
+ax11.set_ylabel('Rot - median(rot)')
+ax12.plot(times, rot12-np.median(rot12), 'k.') # tcd12, cd12_fit, 'r-')
 ax12.set_title('CD1_2 Rot')
-ax21.plot(times, rot21/np.median(rot21), 'k.') # tcd21, cd21_fit, 'r-')
+ax21.plot(times, rot21-np.median(rot21), 'k.') # tcd21, cd21_fit, 'r-')
 ax21.set_title('CD2_1 Rot')
-ax21.set_ylabel('Rot / median(rot)')
+ax21.set_ylabel('Rot - median(rot)')
 ax21.set_xlabel('Days since day 0')
-ax22.plot(times, rot22/np.median(rot22), 'k.') # tcd22, cd22_fit, 'r-')
+ax22.plot(times, rot22-np.median(rot22), 'k.') # tcd22, cd22_fit, 'r-')
 ax22.set_title('CD2_2 Rot')
 ax22.set_xlabel('Days since day 0')
 plt.show()
