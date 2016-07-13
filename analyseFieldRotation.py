@@ -46,8 +46,8 @@ def getSurveyFields():
     with db.cursor() as cur:
         cur.execute(qry)
         for row in cur:
-            first_night = Time(row[2], format='datetime', scale='utc')
-            last_night = Time(row[3], format='datetime', scale='utc')
+            first_night = Time(str(row[2]), format='iso', in_subfmt='date', scale='utc')
+            last_night = Time(str(row[3]), format='iso', in_subfmt='date', scale='utc')
             cameras[int(row[1])].append([row[0], first_night, last_night, int(row[4])])
     return cameras
 
