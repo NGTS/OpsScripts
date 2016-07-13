@@ -121,6 +121,7 @@ def plotCDMatrixFromField(field_id, release, camera_id):
 
     # plot 
     fig=plt.figure(1,figsize=(15,15))
+    plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
     ax11=plt.subplot2grid((4,4),(0,0),colspan=2,rowspan=2)
     ax12=plt.subplot2grid((4,4),(0,2),colspan=2,rowspan=2, sharex=ax11)
     ax21=plt.subplot2grid((4,4),(2,0),colspan=2,rowspan=2, sharex=ax11)
