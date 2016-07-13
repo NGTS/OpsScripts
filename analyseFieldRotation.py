@@ -144,5 +144,5 @@ if __name__ == '__main__':
     #for i in cameras:
     #    for j in cameras[i]:
     #    plotCDMatrixFromField(j[0], release, i)
-    plotCDMaxtrixFromField(cameras[801][0][0], release, 801)
+    plotCDMatrixFromField(cameras[801][0][0], release, 801)
 
