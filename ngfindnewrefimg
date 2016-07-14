@@ -36,14 +36,18 @@ def findClosestImage(action_id,best_r):
         """.format(action_id)
     image_id, xerr, yerr, alt, md, mf = [], [], [], [], [], []
     with db.cursor() as cur:
-        cur.execute(qry)
-        for row in cur:
-            image_id.append(row[0])
-            xerr.append(row[1])
-            yerr.append(row[2])
-            alt.append(row[3])
-            md.append(row[4])
-            mf.append(row[5])
+        length = cur.execute(qry)
+        if length > 0:
+            for row in cur:
+                image_id.append(row[0])
+                xerr.append(row[1])
+                yerr.append(row[2])
+                alt.append(row[3])
+                md.append(row[4])
+                mf.append(row[5])
+        else:
+            print('No files found...')
+            return
     xerr = np.array(xerr)
     yerr = np.array(yerr)
     alt = np.array(alt)
