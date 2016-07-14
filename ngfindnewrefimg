@@ -31,7 +31,7 @@ def findClosestImage(action_id,best_r):
         INNER JOIN raw_image_list
         ON autoguider_log.image_id=raw_image_list.image_id 
         WHERE
-        action_id=%d AND
+        action_id={0:d} AND
         roof_state='FULL OPEN'
         """.format(action_id)
     image_id, xerr, yerr, alt, md, mf = [], [], [], [], [], []
