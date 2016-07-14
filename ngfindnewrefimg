@@ -25,7 +25,7 @@ def findClosestImage(action_id,best_r):
         y_error,
         tel_alt,
         moon_dist,
-        moon_frac,
+        moon_frac
         FROM
         autoguider_log
         INNER JOIN raw_image_list
