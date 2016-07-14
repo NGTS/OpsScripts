@@ -12,42 +12,56 @@ import numpy as np
 import argparse as ap
 
 def argParse():
-	parser=ap.ArgumentParser(description='Script to deteremine best new AG ref image')
-	parser.add_argument("action_id",type=int,help="action_id to chose best image from")
-	parser.add_argument("best_r",type=int,help="show the 'best_r' images, ranked by x/y error")
-	return parser.parse_args()
+    parser=ap.ArgumentParser(description='Script to deteremine best new AG ref image')
+    parser.add_argument("action_id",type=int,help="action_id to chose best image from")
+    parser.add_argument("best_r",type=int,help="show the 'best_r' images, ranked by x/y error")
+    return parser.parse_args()
 
 def findClosestImage(action_id,best_r):
-	db=pymysql.connect(host='ds',db='ngts_ops')
-	qry="SELECT autoguider_log.image_id,x_error,y_error,tel_alt,moon_dist,moon_frac FROM autoguider_log  INNER JOIN raw_image_list ON autoguider_log.image_id=raw_image_list.image_id WHERE action_id=%d" % (action_id)
-	image_id,xerr,yerr,alt,md,mf=[],[],[],[],[],[]
-	with db.cursor() as cur:
-		cur.execute(qry)
-		for row in cur:
-			image_id.append(row[0])
-			xerr.append(row[1])
-			yerr.append(row[2])
-			alt.append(row[3])
-			md.append(row[4])
-			mf.append(row[5])
-	xerr=np.array(xerr)
-	yerr=np.array(yerr)	
-	alt=np.array(alt)
-	md=np.array(md)
-	mf=np.array(mf)
-	r=np.sqrt(xerr**2+yerr**2)
-	temp=zip(r,image_id,alt,md,mf)
-	temp=sorted(temp)
-	rs,image_ids,alts,mds,mfs=zip(*temp)
-	if best_r>=len(rs):
-		best_t=len(rs)
-	for i in range(0,best_r):
-		print "%s - r=%.3f arcsec [Alt: %02d  MoonDist: %03d  MoonFrac: %.2f]" % (image_ids[i],rs[i],alts[i],mds[i],mfs[i])
+    db=pymysql.connect(host='ds',db='ngts_ops')
+    qry="""SELECT
+        autoguider_log.image_id,
+        x_error,
+        y_error,
+        tel_alt,
+        moon_dist,
+        moon_frac,
+        FROM
+        autoguider_log
+        INNER JOIN raw_image_list
+        ON autoguider_log.image_id=raw_image_list.image_id 
+        WHERE
+        action_id=%d AND
+        roof_state='FULL OPEN'
+        """.format(action_id)
+    image_id, xerr, yerr, alt, md, mf = [], [], [], [], [], []
+    with db.cursor() as cur:
+        cur.execute(qry)
+        for row in cur:
+            image_id.append(row[0])
+            xerr.append(row[1])
+            yerr.append(row[2])
+            alt.append(row[3])
+            md.append(row[4])
+            mf.append(row[5])
+    xerr = np.array(xerr)
+    yerr = np.array(yerr)
+    alt = np.array(alt)
+    md = np.array(md)
+    mf = np.array(mf)
+    r = np.sqrt(xerr**2+yerr**2)
+    temp = zip(r,image_id,alt,md,mf)
+    temp = sorted(temp)
+    rs,image_ids,alts,mds,mfs=zip(*temp)
+    if best_r>=len(rs):
+        best_t=len(rs)
+    for i in range(0,best_r):
+        print "%s - r=%.3f arcsec [Alt: %02d  MoonDist: %03d  MoonFrac: %.2f]" % (image_ids[i],rs[i],alts[i],mds[i],mfs[i])
 
 if __name__ == "__main__":
-	args=argParse()
-	if args.best_r <=0:
-		best_r=1
-	else:
-		best_r=args.best_r
-	findClosestImage(args.action_id,best_r)
+    args=argParse()
+    if args.best_r <=0:
+        best_r=1
+    else:
+        best_r=args.best_r
+    findClosestImage(args.action_id,best_r)
