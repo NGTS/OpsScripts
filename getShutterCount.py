@@ -4,7 +4,9 @@ Script to get the shutter counts for NGTS
 import pymysql
 
 def getLabPedestal(camera_id):
-    # get the initial shutter pedestal
+    """
+    Get the initial shutter pedestal
+    """
     qry2 = """
         SELECT gva, leicester
         FROM shutter_history
@@ -22,6 +24,21 @@ def getLabPedestal(camera_id):
             except TypeError:
                 leicester = 0
             return gva, leicester
+
+def updateImageCount(camera_id, shutter_id, n_images):
+    """
+    Update the total number of images for
+    the currently active shutters
+    """
+    qry3 = """
+        UPDATE camera_shutter_count
+        SET n_images = {}
+        WHERE camera_id = {}
+        AND shutter_id = {}
+        """.format(n_images, camera_id, shutter_id)
+    with db.cursor() as cur3:
+        cur3.execute(qry3)
+        db.commit()
 
 if __name__ == '__main__':
     db = pymysql.connect(host='ds', db='ngts_ops')
@@ -47,4 +64,4 @@ if __name__ == '__main__':
                 gva, leicester = getLabPedestal(camera_id)
                 counts[camera_id] = counts[camera_id] + gva + leicester
             print('{} {} {}'.format(camera_id, counts[camera_id], shutter_id))
-            # update the n_images column in the table
+            updateImageCount(camera_id, shutter_id, counts[camera_id])
