@@ -1,3 +1,4 @@
+#!/usr/local/python/bin/python
 """
 Script to get the shutter counts for NGTS
 """
