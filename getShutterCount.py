@@ -24,7 +24,7 @@ def getLabPedestal(camera_id):
             return gva, leicester
 
 if __name__ == '__main__':
-    db = pymysql.connect(db='ds', database='ngts_ops')
+    db = pymysql.connect(host='ds', db='ngts_ops')
     qry = """
         SELECT riml.camera_id,shutter_id,count(*)
         FROM raw_image_list as riml
