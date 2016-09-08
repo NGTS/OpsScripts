@@ -10,15 +10,15 @@ def getLabPedestal(camera_id):
         FROM shutter_history
         WHERE camera_id = {}
         """.format(camera_id)
-    with db.cursor() as cur:
-        cur.execute(qry)
-        for row in cur:
+    with db.cursor() as cur2:
+        cur2.execute(qry2)
+        for row2 in cur2:
             try:
-                gva = int(row[0])
+                gva = int(row2[0])
             except TypeError:
                 gva = 0
             try:
-                leicester = int(row[1])
+                leicester = int(row2[1])
             except TypeError:
                 leicester = 0
             return gva, leicester
