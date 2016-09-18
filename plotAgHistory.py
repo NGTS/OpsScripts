@@ -12,17 +12,20 @@ plt.rcParams.update({'font.size': 20})
 camera_id=802
 
 db=pymysql.connect(host='ngtsdb',db='ngts_ops')
-qry="SELECT x_error,y_error,x_delta,y_delta,night,start_time_utc FROM autoguider_log INNER JOIN raw_image_list ON autoguider_log.image_id=raw_image_list.image_id WHERE camera_id = %d AND night > 20160301" % (camera_id)
+qry="SELECT x_error,y_error,x_delta,y_delta,night,start_time_utc,mjd,tel_ha  FROM autoguider_log INNER JOIN raw_image_list ON autoguider_log.image_id=raw_image_list.image_id WHERE camera_id = %d AND night BETWEEN 20160301 AND 20160316" % (camera_id)
 x_error,y_error,x_delta,y_delta,night,start_time_utc=[],[],[],[],[],[]
+mjd,tel_ha = [],[]
 with db.cursor() as cur:
-	cur.execute(qry)
-	for row in cur:
-		x_error.append(row[0])
-		y_error.append(row[1])
-		x_delta.append(row[2])
-		y_delta.append(row[3])
-		night.append(row[4])
-		start_time_utc.append(row[5])
+    cur.execute(qry)
+    for row in cur:
+        x_error.append(row[0])
+        y_error.append(row[1])
+        x_delta.append(row[2])
+        y_delta.append(row[3])
+        night.append(row[4])
+        start_time_utc.append(row[5])
+        mjd.append(row[6])
+        tel_ha.append(row[7])
 
 # convert to arrays and pixels
 x_error=np.array(x_error)/5.
@@ -30,12 +33,25 @@ y_error=np.array(y_error)/5.
 x_delta=np.array(x_delta)/5.
 y_delta=np.array(y_delta)/5.
 
+# make an output file
+outfile = open('AgResiduals_802_March2016.txt', 'w')
+for i in range(0, len(x_error)):
+    line = "{}  {} {}  {}  {}  {}  {}\n".format(mjd[i],
+                                                start_time_utc[i],
+                                                tel_ha[i],
+                                                x_error[i],
+                                                y_error[i],
+                                                x_delta[i],
+                                                y_delta[i])
+    outfile.write(line)
+outfile.close()
+
 # find night boundaries
 boundaries,night_str=[],[]
 for i in range(0,len(night)-1):
-	if night[i+1] != night[i]:
-		boundaries.append(i+1)
-		night_str.append(night[i].strftime("%Y%m%d"))
+    if night[i+1] != night[i]:
+        boundaries.append(i+1)
+        night_str.append(night[i].strftime("%Y%m%d"))
 
 fig,ax=plt.subplots(2,1,sharex=True,figsize=(20,10))
 ax[0].plot(x_error,'r.',y_error,'b.',ms=1)
@@ -44,14 +60,14 @@ ax[0].legend(('X RMS: %.2f pix' % (np.std(x_error)),'Y RMS: %.2f pix' % (np.std(
 ax[0].set_ylim(-1,1)
 ax[0].set_xlim(0,len(x_error))
 for k in range(0,len(boundaries)):
-	ax[0].axvline(boundaries[k],lw=1,ls='dashed',color='k')
-	ax[0].text(boundaries[k]-2250,0.5,night_str[k],fontsize=16)
+    ax[0].axvline(boundaries[k],lw=1,ls='dashed',color='k')
+    ax[0].text(boundaries[k]-2250,0.5,night_str[k],fontsize=16)
 
 ax[1].plot(x_delta,'r.',y_delta,'b.',ms=1)
 ax[1].set_ylabel('AG Correction (Pixels)')
 for k in range(0,len(boundaries)):
-	ax[1].axvline(boundaries[k],lw=1,ls='dashed',color='k')
-	ax[1].text(boundaries[k]-2250,2,night_str[k],fontsize=16)
+    ax[1].axvline(boundaries[k],lw=1,ls='dashed',color='k')
+    ax[1].text(boundaries[k]-2250,2,night_str[k],fontsize=16)
 ax[1].set_ylim(-15,5)
 ax[1].set_xlim(0,len(x_error))
 ax[1].set_xlabel('Image Number')
