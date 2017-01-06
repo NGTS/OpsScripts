@@ -1,0 +1,21 @@
+#!/usr/local/python/bin/python
+"""
+Utility to help multiple talon screen sessions
+"""
+import os
+import socket
+
+def makeScreen():
+    hn = ''.join(socket.gethostname().split('-')[-2:]) + '_tal'
+    results = os.popen('screen -ls').readlines()
+    for line in results:
+        if hn in line:
+            print('Found {} screen, skipping...'.format(hn))
+            return 0
+    else:
+        print('{} screen not found, making it...'.format(hn))
+        os.system('screen -d -m -S {}'.format(hn))
+
+if __name__ == "__main__":
+    makeScreen()
+

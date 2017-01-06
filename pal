@@ -1,0 +1,8 @@
+#!/usr/local/python/bin/python
+"""
+Utility to help multiple paladin screen sessions
+"""
+import os
+import socket
+hn = ''.join(socket.gethostname().split('-')[-2:]) + '_pal'
+os.system('screen -xr {}'.format(hn))
