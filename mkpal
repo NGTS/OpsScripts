@@ -7,14 +7,17 @@ import socket
 
 def makeScreen():
     hn = ''.join(socket.gethostname().split('-')[-2:]) + '_pal'
-    results = os.popen('screen -ls').readlines()
-    for line in results:
-        if hn in line:
-            print('Found {} screen, skipping...'.format(hn))
-            return 0
+    if 'das' in hn:
+        results = os.popen('screen -ls').readlines()
+        for line in results:
+            if hn in line:
+                print('Found {} screen, skipping...'.format(hn))
+                return 0
+        else:
+            print('{} screen not found, making it...'.format(hn))
+            os.system('screen -d -m -S {}'.format(hn))
     else:
-        print('{} screen not found, making it...'.format(hn))
-        os.system('screen -d -m -S {}'.format(hn))
+        print('This command only works on DAS machines')
 
 if __name__ == "__main__":
     makeScreen()
