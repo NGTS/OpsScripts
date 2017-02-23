@@ -45,8 +45,6 @@ def general():
     rc('font', family='Times New Roman', size=7)
     rc('text', color='black', usetex=True)
     rc('figure', dpi=DPI)
-    rc('axes',
-       xmargin=0.05,
        ymargin=0.05,
        linewidth=AXES_LINE_WIDTH,
        labelsize=7,
@@ -132,29 +130,29 @@ if __name__ == "__main__":
     ax[0].set_ylabel('Error (pixels)')
     ax[0].legend(('X RMS: %.2f pix' % (np.std(x_error)),
                   'Y RMS: %.2f pix' % (np.std(y_error))),
-                 loc='lower right',
-                 markerscale=1,
-                 fontsize=7,
-                 scatterpoints=1)
+                 loc='lower right', markerscale=1,
+                 fontsize=7, scatterpoints=1,
+                 facecolor='white', edgecolor='black',
+                 linewidth=0.5)
     ax[0].set_ylim(-1, 1)
     ax[0].set_xlim(0, len(x_error))
     ax[0].yaxis.set_ticks_position('both')
     ax[0].xaxis.set_ticks_position('both')
     # draw night boundaries
     for k in range(0, len(boundaries)):
-        ax[0].axvline(boundaries[k], lw=1, ls='dashed', color='k')
-        ax[0].text(boundaries[k]-2250, 0.5, night_str[k], fontsize=7)
+        ax[0].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
+        ax[0].text(boundaries[k]-1000, 0.5, night_str[k], fontsize=7)
     # plot the cumulative error
     ax[1].plot(x_delta, 'r.', y_delta, 'b.', ms=0.25)
     ax[1].set_ylabel('Cumulative correction (pixels)')
     for k in range(0, len(boundaries)):
         ax[1].axvline(boundaries[k], lw=1, ls='dashed', color='k')
-        ax[1].text(boundaries[k]-2250, 2, night_str[k], fontsize=7)
+        ax[1].text(boundaries[k]-1000, 2, night_str[k], fontsize=7)
     ax[1].set_ylim(-15, 5)
     ax[1].set_xlim(0, len(x_error))
     ax[1].yaxis.set_ticks_position('both')
     ax[1].xaxis.set_ticks_position('both')
     ax[1].set_xlabel('Image Number')
-    plt.subplots_adjust(left=0.08, right=0.98, top=0.98,
-                        bottom=0.15, hspace=0.05)
+    plt.subplots_adjust(left=0.15, right=0.98, top=0.98,
+                        bottom=0.1, hspace=0.05)
     fig.savefig('AgResiduals_802_March2016.png')
