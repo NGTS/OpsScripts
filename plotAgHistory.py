@@ -128,7 +128,7 @@ if __name__ == "__main__":
     boundaries, night_str = getAgStatistics(camera_id, night1, night2)
     fig, ax = plt.subplots(2, 1, sharex=True)
     # plot the frame to frame error
-    ax[0].plot(x_error, 'r.', y_error, 'b.', ms=0.25)
+    ax[0].plot(x_error, 'r.', y_error, 'b.', ms=0.25, marker=',')
     ax[0].set_ylabel('Error (pixels)')
     ax[0].legend(('X RMS: %.2f pix' % (np.std(x_error)),
                   'Y RMS: %.2f pix' % (np.std(y_error))),
@@ -142,13 +142,13 @@ if __name__ == "__main__":
     # draw night boundaries
     for k in range(0, len(boundaries)):
         ax[0].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
-        ax[0].text(boundaries[k]-1000, 0.5, night_str[k], fontsize=7)
+        ax[0].text(boundaries[k]-1500, 0.5, night_str[k], fontsize=7)
     # plot the cumulative error
-    ax[1].plot(x_delta, 'r.', y_delta, 'b.', ms=0.25)
+    ax[1].plot(x_delta, 'r.', y_delta, 'b.', ms=0.25, marker=',')
     ax[1].set_ylabel('Cumulative correction (pixels)')
     for k in range(0, len(boundaries)):
-        ax[1].axvline(boundaries[k], lw=1, ls='dashed', color='k')
-        ax[1].text(boundaries[k]-1000, 2, night_str[k], fontsize=7)
+        ax[1].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
+        ax[1].text(boundaries[k]-1500, 2, night_str[k], fontsize=7)
     ax[1].set_ylim(-15, 5)
     ax[1].set_xlim(0, len(x_error))
     ax[1].yaxis.set_ticks_position('both')
