@@ -134,8 +134,7 @@ if __name__ == "__main__":
                   'Y RMS: %.2f pix' % (np.std(y_error))),
                  loc='lower right', markerscale=1,
                  fontsize=7, scatterpoints=1,
-                 facecolor='white', edgecolor='black',
-                 linewidth=0.5)
+                 facecolor='white', edgecolor='black')
     ax[0].set_ylim(-1, 1)
     ax[0].set_xlim(0, len(x_error))
     ax[0].yaxis.set_ticks_position('both')
