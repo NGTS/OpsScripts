@@ -117,7 +117,7 @@ def getAgStatistics(camera_id, night1, night2):
     for i in range(0, len(night)-1):
         if night[i+1] != night[i]:
             boundaries.append(i+1)
-            night_str.append(night[i].strftime("%Y%m%d"))
+            night_str.append(night[i].strftime("%d"))
     return x_error, y_error, x_delta, y_delta, \
            night, boundaries, night_str
 
@@ -128,27 +128,29 @@ if __name__ == "__main__":
     boundaries, night_str = getAgStatistics(camera_id, night1, night2)
     fig, ax = plt.subplots(2, 1, sharex=True)
     # plot the frame to frame error
-    ax[0].plot(x_error, 'r.', y_error, 'b.', ms=1)
+    ax[0].plot(x_error, 'r.', y_error, 'b.', ms=0.25)
     ax[0].set_ylabel('Error (pixels)')
     ax[0].legend(('X RMS: %.2f pix' % (np.std(x_error)),
                   'Y RMS: %.2f pix' % (np.std(y_error))),
                  loc='lower right',
-                 markerscale=5,
+                 markerscale=1,
+                 fontsize=7,
                  scatterpoints=1)
     ax[0].set_ylim(-1, 1)
     ax[0].set_xlim(0, len(x_error))
     # draw night boundaries
     for k in range(0, len(boundaries)):
         ax[0].axvline(boundaries[k], lw=1, ls='dashed', color='k')
-        ax[0].text(boundaries[k]-2250, 0.5, night_str[k], fontsize=16)
+        ax[0].text(boundaries[k]-2250, 0.5, night_str[k], fontsize=7)
     # plot the cumulative error
-    ax[1].plot(x_delta, 'r.', y_delta, 'b.', ms=1)
+    ax[1].plot(x_delta, 'r.', y_delta, 'b.', ms=0.25)
     ax[1].set_ylabel('Cumulative correction (pixels)')
     for k in range(0, len(boundaries)):
         ax[1].axvline(boundaries[k], lw=1, ls='dashed', color='k')
-        ax[1].text(boundaries[k]-2250, 2, night_str[k], fontsize=16)
+        ax[1].text(boundaries[k]-2250, 2, night_str[k], fontsize=7)
     ax[1].set_ylim(-15, 5)
     ax[1].set_xlim(0, len(x_error))
     ax[1].set_xlabel('Image Number')
-    plt.subplots_adjust(hspace=0.05)
+    plt.subplots_adjust(left=0.08, right=0.98, top=0.98,
+                        bottom=0.15, hspace=0.05)
     fig.savefig('AgResiduals_802_March2016.png')
