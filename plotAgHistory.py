@@ -15,8 +15,8 @@ import matplotlib.pyplot as plt
 # pylint: disable=redefined-outer-name
 
 camera_id = 802
-night1 = '20160301'
-night2 = '20160316'
+night1 = '2016-03-01'
+night2 = '2016-03-16'
 
 # DATA GLOBALS
 DATA_LINE_COLOR = 'black'
@@ -91,11 +91,15 @@ def getAgStatistics(camera_id, night1, night2):
             y_delta, night
             FROM autoguider_log as agl
             INNER JOIN raw_image_list as ril
-            ON agl.image_id=.rilimage_id
-            WHERE camera_id = %s
-            AND night BETWEEN %s AND %s
+            ON agl.image_id=ril.image_id
+            WHERE ril.camera_id = %s
+            AND ril.night >= %s
+            AND ril.night <= %s
             """
-        cur.execute(qry, (camera_id, night1, night2))
+        qry_args = (camera_id, night1, night2)
+        print(qry)
+        print(qry_args)
+        cur.execute(qry, qry_args)
         results = cur.fetchall()
         x_error = np.empty(len(results))
         y_error = np.empty(len(results))
