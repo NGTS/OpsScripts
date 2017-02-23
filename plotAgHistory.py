@@ -44,7 +44,7 @@ def general():
     """
     rc('font', family='Times New Roman', size=7)
     rc('text', color='black', usetex=True)
-    rc('figure', dpi=DPI,
+    rc('figure', dpi=DPI)
     rc('axes',
        xmargin=0.05,
        ymargin=0.05,
