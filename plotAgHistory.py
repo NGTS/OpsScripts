@@ -84,7 +84,7 @@ def getAgStatistics(camera_id, night1, night2):
     """
     Grab the AG data from the database
     """
-    with pymysql.connect(host='ngtsdb', db='ngts_ops') as cur:
+    with pymysql.connect(host='ds', db='ngts_ops') as cur:
         qry = """
             SELECT
             x_error, y_error, x_delta,
