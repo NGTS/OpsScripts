@@ -15,8 +15,8 @@ import matplotlib.pyplot as plt
 # pylint: disable=redefined-outer-name
 
 camera_id = 802
-night1 = '2016-03-01'
-night2 = '2016-03-16'
+night1 = '20160301'
+night2 = '20160316'
 
 # DATA GLOBALS
 DATA_LINE_COLOR = 'black'
