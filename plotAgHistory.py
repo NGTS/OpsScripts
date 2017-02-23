@@ -132,7 +132,7 @@ if __name__ == "__main__":
     ax[0].set_ylabel('Error (pixels)')
     ax[0].legend(('X RMS: %.2f pix' % (np.std(x_error)),
                   'Y RMS: %.2f pix' % (np.std(y_error))),
-                 loc='lower right', markerscale=1,
+                 loc='lower right', markerscale=3,
                  fontsize=7, scatterpoints=1,
                  facecolor='white', edgecolor='black')
     ax[0].set_ylim(-1, 1)
