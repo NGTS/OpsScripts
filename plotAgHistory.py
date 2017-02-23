@@ -111,7 +111,7 @@ def getAgStatistics(camera_id, night1, night2):
             y_error[i] = round(float(row[1])/5., 2)
             x_delta[i] = round(float(row[2])/5., 2)
             y_delta[i] = round(float(row[3])/5., 2)
-            night[i] = round(float(row[4])/5., 2)
+            night[i] = row[4]
     # find night boundaries
     boundaries, night_str = [], []
     for i in range(0, len(night)-1):
