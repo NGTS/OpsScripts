@@ -138,6 +138,8 @@ if __name__ == "__main__":
                  scatterpoints=1)
     ax[0].set_ylim(-1, 1)
     ax[0].set_xlim(0, len(x_error))
+    ax[0].yaxis.set_ticks_position('both')
+    ax[0].xaxis.set_ticks_position('both')
     # draw night boundaries
     for k in range(0, len(boundaries)):
         ax[0].axvline(boundaries[k], lw=1, ls='dashed', color='k')
@@ -150,6 +152,8 @@ if __name__ == "__main__":
         ax[1].text(boundaries[k]-2250, 2, night_str[k], fontsize=7)
     ax[1].set_ylim(-15, 5)
     ax[1].set_xlim(0, len(x_error))
+    ax[1].yaxis.set_ticks_position('both')
+    ax[1].xaxis.set_ticks_position('both')
     ax[1].set_xlabel('Image Number')
     plt.subplots_adjust(left=0.08, right=0.98, top=0.98,
                         bottom=0.15, hspace=0.05)
