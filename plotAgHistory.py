@@ -34,7 +34,7 @@ AXES_XTICK_DIRECTION = 'in'
 AXES_YTICK_DIRECTION = 'in'
 
 # FIGURE GLOBALS
-ONE_COL_WIDTH = 3.46
+TWO_COL_WIDTH = 7.09
 DPI = 800
 
 def general():
@@ -74,11 +74,11 @@ def general():
        size=AXES_MINOR_TICK_LENGTH,
        width=AXES_LINE_WIDTH)
 
-def one_column():
+def two_column():
     """
-    One-column-width plot settings
+    Two-column-width plot settings
     """
-    rc('figure', figsize=(ONE_COL_WIDTH, ONE_COL_WIDTH))
+    rc('figure', figsize=(TWO_COL_WIDTH, ONE_COL_WIDTH*0.66))
 
 def getAgStatistics(camera_id, night1, night2):
     """
@@ -123,7 +123,7 @@ def getAgStatistics(camera_id, night1, night2):
 
 if __name__ == "__main__":
     general()
-    one_column()
+    two_column()
     x_error, y_error, x_delta, y_delta, night, \
     boundaries, night_str = getAgStatistics(camera_id, night1, night2)
     fig, ax = plt.subplots(2, 1, sharex=True)
