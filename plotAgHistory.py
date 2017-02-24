@@ -154,6 +154,6 @@ if __name__ == "__main__":
     ax[1].yaxis.set_ticks_position('both')
     ax[1].xaxis.set_ticks_position('both')
     ax[1].set_xlabel('Image Number')
-    plt.subplots_adjust(left=0.7, right=0.98, top=0.97,
+    plt.subplots_adjust(left=0.07, right=0.98, top=0.97,
                         bottom=0.15, hspace=0.07)
     fig.savefig('AgResiduals_802_March2016.png')
