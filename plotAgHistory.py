@@ -141,7 +141,7 @@ if __name__ == "__main__":
                  fontsize=7, scatterpoints=1,
                  facecolor='white', edgecolor='black')
     ax[0].set_ylim(-1.1, 1.1)
-    ax[0].set_xlim(0, int(max(ind)))
+    ax[0].set_xlim(0, max(ind))
     ax[0].yaxis.set_ticks_position('both')
     ax[0].xaxis.set_ticks_position('both')
     # draw night boundaries
@@ -155,7 +155,7 @@ if __name__ == "__main__":
         ax[1].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
         ax[1].text(boundaries[k]-1.55, 2, night_str[k], fontsize=7)
     ax[1].set_ylim(-16, 6)
-    ax[1].set_xlim(0, int(max(ind)))
+    ax[1].set_xlim(0, max(ind))
     ax[1].yaxis.set_ticks_position('both')
     ax[1].xaxis.set_ticks_position('both')
     ax[1].set_xlabel(r'Image Number ($\times10^{3}$)')
