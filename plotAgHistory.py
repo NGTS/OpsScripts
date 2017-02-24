@@ -142,13 +142,13 @@ if __name__ == "__main__":
     # draw night boundaries
     for k in range(0, len(boundaries)):
         ax[0].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
-        ax[0].text(boundaries[k]-1750, 0.5, night_str[k], fontsize=7)
+        ax[0].text(boundaries[k]-1650, 0.5, night_str[k], fontsize=7)
     # plot the cumulative error
     ax[1].plot(x_delta, 'r.', y_delta, 'b.', ms=0.25, marker='.')
     ax[1].set_ylabel('Correction (pixels)')
     for k in range(0, len(boundaries)):
         ax[1].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
-        ax[1].text(boundaries[k]-1750, 2, night_str[k], fontsize=7)
+        ax[1].text(boundaries[k]-1650, 2, night_str[k], fontsize=7)
     ax[1].set_ylim(-15, 5)
     ax[1].set_xlim(0, len(x_error))
     ax[1].yaxis.set_ticks_position('both')
