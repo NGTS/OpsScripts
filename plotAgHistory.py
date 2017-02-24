@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 camera_id = 802
 night1 = '2016-03-01'
-night2 = '2016-03-16'
+night2 = '2016-03-31'
 
 # DATA GLOBALS
 DATA_LINE_COLOR = 'black'
