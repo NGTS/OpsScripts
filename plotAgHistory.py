@@ -135,7 +135,7 @@ if __name__ == "__main__":
                  loc='lower right', markerscale=3,
                  fontsize=7, scatterpoints=1,
                  facecolor='white', edgecolor='black')
-    ax[0].set_ylim(-1, 1)
+    ax[0].set_ylim(-1.1, 1.1)
     ax[0].set_xlim(0, len(x_error))
     ax[0].yaxis.set_ticks_position('both')
     ax[0].xaxis.set_ticks_position('both')
@@ -149,11 +149,11 @@ if __name__ == "__main__":
     for k in range(0, len(boundaries)):
         ax[1].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
         ax[1].text(boundaries[k]-1550, 2, night_str[k], fontsize=7)
-    ax[1].set_ylim(-15, 4)
+    ax[1].set_ylim(-16, 6)
     ax[1].set_xlim(0, len(x_error))
     ax[1].yaxis.set_ticks_position('both')
     ax[1].xaxis.set_ticks_position('both')
     ax[1].set_xlabel('Image Number')
     plt.subplots_adjust(left=0.07, right=0.98, top=0.97,
-                        bottom=0.15, hspace=0.07)
+                        bottom=0.15, hspace=0.05)
     fig.savefig('AgResiduals_802_March2016.png')
