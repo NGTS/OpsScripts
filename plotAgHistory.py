@@ -78,7 +78,7 @@ def two_column():
     """
     Two-column-width plot settings
     """
-    rc('figure', figsize=(TWO_COL_WIDTH, (TWO_COL_WIDTH/.2)*0.66))
+    rc('figure', figsize=(TWO_COL_WIDTH, (TWO_COL_WIDTH/2.)*0.66))
 
 def getAgStatistics(camera_id, night1, night2):
     """
