@@ -124,11 +124,16 @@ def getAgStatistics(camera_id, night1, night2):
 if __name__ == "__main__":
     general()
     two_column()
+    # grab the data, scale the number on the x axis
+    scaling_factor = 1000.
     x_error, y_error, x_delta, y_delta, night, \
     boundaries, night_str = getAgStatistics(camera_id, night1, night2)
+    ind = np.arange(len(x_error))/1000.
+    boundaries = boundaries/1000.
+    # set up the plots
     fig, ax = plt.subplots(2, 1, sharex=True)
     # plot the frame to frame error
-    ax[0].plot(x_error, 'r.', y_error, 'b.', ms=0.25, marker='.')
+    ax[0].plot(ind, x_error, 'r.', ind, y_error, 'b.', ms=0.25, marker='.')
     ax[0].set_ylabel('Error (pixels)')
     ax[0].legend(('X RMS: %.2f pix' % (np.std(x_error)),
                   'Y RMS: %.2f pix' % (np.std(y_error))),
@@ -136,21 +141,21 @@ if __name__ == "__main__":
                  fontsize=7, scatterpoints=1,
                  facecolor='white', edgecolor='black')
     ax[0].set_ylim(-1.1, 1.1)
-    ax[0].set_xlim(0, len(x_error))
+    ax[0].set_xlim(0, int(max(ind)))
     ax[0].yaxis.set_ticks_position('both')
     ax[0].xaxis.set_ticks_position('both')
     # draw night boundaries
     for k in range(0, len(boundaries)):
         ax[0].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
-        ax[0].text(boundaries[k]-1550, 0.5, night_str[k], fontsize=7)
+        ax[0].text(boundaries[k]-1.55, 0.5, night_str[k], fontsize=7)
     # plot the cumulative error
-    ax[1].plot(x_delta, 'r.', y_delta, 'b.', ms=0.25, marker='.')
+    ax[1].plot(ind, x_delta, 'r.', ind, y_delta, 'b.', ms=0.25, marker='.')
     ax[1].set_ylabel('Correction (pixels)')
     for k in range(0, len(boundaries)):
         ax[1].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
-        ax[1].text(boundaries[k]-1550, 2, night_str[k], fontsize=7)
+        ax[1].text(boundaries[k]-1.55, 2, night_str[k], fontsize=7)
     ax[1].set_ylim(-16, 6)
-    ax[1].set_xlim(0, len(x_error))
+    ax[1].set_xlim(0, int(max(ind)))
     ax[1].yaxis.set_ticks_position('both')
     ax[1].xaxis.set_ticks_position('both')
     ax[1].set_xlabel('Image Number')
