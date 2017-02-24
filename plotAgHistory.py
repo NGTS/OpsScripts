@@ -119,7 +119,7 @@ def getAgStatistics(camera_id, night1, night2):
             boundaries.append(i+1)
             night_str.append(night[i].strftime("%d"))
     return x_error, y_error, x_delta, y_delta, \
-           night, boundaries, night_str
+           night, np.array(boundaries), night_str
 
 if __name__ == "__main__":
     general()
