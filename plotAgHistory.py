@@ -145,7 +145,7 @@ if __name__ == "__main__":
         ax[0].text(boundaries[k]-1750, 0.5, night_str[k], fontsize=7)
     # plot the cumulative error
     ax[1].plot(x_delta, 'r.', y_delta, 'b.', ms=0.25, marker='.')
-    ax[1].set_ylabel('Cumulative correction (pixels)')
+    ax[1].set_ylabel('Correction (pixels)')
     for k in range(0, len(boundaries)):
         ax[1].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
         ax[1].text(boundaries[k]-1750, 2, night_str[k], fontsize=7)
@@ -154,6 +154,6 @@ if __name__ == "__main__":
     ax[1].yaxis.set_ticks_position('both')
     ax[1].xaxis.set_ticks_position('both')
     ax[1].set_xlabel('Image Number')
-    plt.subplots_adjust(left=0.1, right=0.97, top=0.97,
+    plt.subplots_adjust(left=0.7, right=0.98, top=0.97,
                         bottom=0.15, hspace=0.07)
     fig.savefig('AgResiduals_802_March2016.png')
