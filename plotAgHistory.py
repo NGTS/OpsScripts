@@ -158,7 +158,7 @@ if __name__ == "__main__":
     ax[1].set_xlim(0, max(ind))
     ax[1].yaxis.set_ticks_position('both')
     ax[1].xaxis.set_ticks_position('both')
-    ax[1].set_xlabel(r'Image Number ($\times10^{3}$)')
+    ax[1].set_xlabel(r'Image number ($\times10^{3}$)')
     plt.subplots_adjust(left=0.06, right=0.98, top=0.97,
                         bottom=0.15, hspace=0.05)
     fig.savefig('AgResiduals_802_March2016.png')
