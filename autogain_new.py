@@ -19,12 +19,12 @@ if __name__ == "__main__":
     os.chdir(imseq_dir)
     # take 2 biases first
     comm_b = ("./imsequence --temperature -70 --fan full --gain {}"
-              " --holdtemp --fastcool --sequence 2b --outdir {}").format(args.gain,
+              " --holdtemp --fastcool --sequence 2b --outdir {}").format(args.pag,
                                                                          args.outdir)
     os.system(comm_b)
     for time in times:
         comm = ("./imsequence --temperature -70 --fan full --gain {}"
-                " --holdtemp --fastcool --sequence 2i{} --outdir {}").format(args.gain,
+                " --holdtemp --fastcool --sequence 2i{} --outdir {}").format(args.pag,
                                                                              time,
                                                                              args.outdir)
         os.system(comm)
