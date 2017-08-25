@@ -22,18 +22,24 @@ if __name__ == "__main__":
               " --holdtemp --fastcool --sequence 2b --outdir {}").format(args.pag,
                                                                          args.outdir)
     os.system(comm_b)
-    for time in times:
+    for i, time in enumerate(times):
         comm = ("./imsequence --temperature -70 --fan full --gain {}"
-                " --holdtemp --fastcool --sequence 2i{} --outdir {}").format(args.pag,
-                                                                             time,
-                                                                             args.outdir)
+                " --holdtemp --fastcool --sequence i1;2i{} --outdir {}").format(args.pag,
+                                                                                time,
+                                                                                args.outdir)
         os.system(comm)
-        os.system('mv {}/UNKNOWN_0000_IMAGE.fits {}/{}_PAG{}_{:02d}_1.fits'.format(args.outdir,
+        os.system('mv {}/UNKNOWN_0000_IMAGE.fits {}/{}_PAG{}_{:02d}_{}.fits'.format(args.outdir,
+                                                                                    args.outdir,
+                                                                                    args.camera,
+                                                                                    args.pag,
+                                                                                    time,
+                                                                                    i+1))
+        os.system('mv {}/UNKNOWN_0001_IMAGE.fits {}/{}_PAG{}_{:02d}_1.fits'.format(args.outdir,
                                                                                    args.outdir,
                                                                                    args.camera,
                                                                                    args.pag,
                                                                                    time))
-        os.system('mv {}/UNKNOWN_0001_IMAGE.fits {}/{}_PAG{}_{:02d}_2.fits'.format(args.outdir,
+        os.system('mv {}/UNKNOWN_0002_IMAGE.fits {}/{}_PAG{}_{:02d}_2.fits'.format(args.outdir,
                                                                                    args.outdir,
                                                                                    args.camera,
                                                                                    args.pag,
