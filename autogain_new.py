@@ -35,9 +35,9 @@ if __name__ == "__main__":
     # do the science images
     for i, time in enumerate(times):
         comm = ("./imsequence --temperature -70 --fan full --gain {}"
-                " --holdtemp --fastcool --sequence i1;2i{} --outdir {}").format(args.pag,
-                                                                                time,
-                                                                                args.outdir)
+                " --holdtemp --fastcool --sequence 'i1;2i{}' --outdir {}").format(args.pag,
+                                                                                  time,
+                                                                                  args.outdir)
         os.system(comm)
         os.system('mv {}/UNKNOWN_0000_IMAGE.fits {}/{}_PAG{}_{:02d}_{}.fits'.format(args.outdir,
                                                                                     args.outdir,
