@@ -43,7 +43,6 @@ if __name__ == "__main__":
                                                                                     args.outdir,
                                                                                     args.camera,
                                                                                     args.pag,
-                                                                                    time,
                                                                                     i+1))
         os.system('mv {}/UNKNOWN_0001_IMAGE.fits {}/{}_PAG{}_{:02d}_1.fits'.format(args.outdir,
                                                                                    args.outdir,
