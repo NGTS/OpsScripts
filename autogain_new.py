@@ -39,7 +39,7 @@ if __name__ == "__main__":
                                                                                   time,
                                                                                   args.outdir)
         os.system(comm)
-        os.system('mv {}/UNKNOWN_0000_IMAGE.fits {}/{}_PAG{}_{:02d}_{}.fits'.format(args.outdir,
+        os.system('mv {}/UNKNOWN_0000_IMAGE.fits {}/{}_PAG{}_01_{}.fits'.format(args.outdir,
                                                                                     args.outdir,
                                                                                     args.camera,
                                                                                     args.pag,
