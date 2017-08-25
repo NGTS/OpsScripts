@@ -31,7 +31,7 @@ if __name__ == "__main__":
                                                                               args.outdir,
                                                                               args.camera,
                                                                               args.pag,
-                                                                              0)
+                                                                              0))
     # do the science images
     for i, time in enumerate(times):
         comm = ("./imsequence --temperature -70 --fan full --gain {}"
