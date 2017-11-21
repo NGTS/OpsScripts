@@ -21,8 +21,8 @@ if __name__ == "__main__":
         results = cur.fetchall()
     x_error = np.zeros(len(results))
     y_error = np.zeros(len(results))
-    for row in results:
-        x_error = float(row[0])
-        y_error = float(row[1])
+    for i, row in enumerate(results):
+        x_error[i] = float(row[0])
+        y_error[i] = float(row[1])
     print('RMS X: {:.4f}\tRMS Y: {:.4f}'.format(np.std(x_error),
                                                 np.std(y_error)))
