@@ -5,6 +5,8 @@ images as a cross match
 import pymysql
 import numpy as np
 
+# pylint: disable=invalid-name
+
 if __name__ == "__main__":
     refs = ['80520150922062822', '80520160114005454',
             '80520160114005520', '80520160316004726']
@@ -22,5 +24,5 @@ if __name__ == "__main__":
     for row in results:
         x_error = float(row[0])
         y_error = float(row[1])
-    print('RMS X: {.4f}\tRMS Y: {.4f}'.format(np.std(x_error),
-                                              np.std(y_error)))
+    print('RMS X: {:.4f}\tRMS Y: {:.4f}'.format(np.std(x_error),
+                                                np.std(y_error)))
