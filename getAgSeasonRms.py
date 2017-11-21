@@ -23,4 +23,4 @@ if __name__ == "__main__":
         x_error = float(row[0])
         y_error = float(row[1])
     print('RMS X: {.4f}\tRMS Y: {.4f}'.format(np.std(x_error),
-                                              np.std(y_error))
+                                              np.std(y_error)))
