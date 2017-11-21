@@ -15,7 +15,7 @@ if __name__ == "__main__":
         SELECT x_error, y_error, quality
         FROM autoguider_log
         WHERE ref_image_id IN ({})
-        AND ABS(x_error) < 10 and ABS(y_error) < 10i
+        AND ABS(x_error) < 10 and ABS(y_error) < 10
         """.format(','.join(refs))
     with pymysql.connect(host='10.2.5.32', db='ngts_ops') as cur:
         cur.execute(qry)
