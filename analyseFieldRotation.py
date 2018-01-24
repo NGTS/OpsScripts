@@ -21,7 +21,7 @@ db = pymysql.connect(host='ngtsdb', db='ngts_ops')
 
 # globals
 cdelta = 4.98
-release = 'TEST16'
+release = 'CYCLE1706'
 filestore = '/home/jmcc/dev/OpsScripts/CDMatrix'
 
 def fitQuad(x, y):
@@ -43,8 +43,7 @@ def getSurveyFields():
         field,
         camera_id,
         first_night,
-        last_night,
-        num_nights
+        last_night
         FROM
         field_summary
         WHERE
@@ -56,7 +55,7 @@ def getSurveyFields():
         for row in cur:
             first_night = Time(str(row[2]), format='iso', in_subfmt='date', scale='utc')
             last_night = Time(str(row[3]), format='iso', in_subfmt='date', scale='utc')
-            cameras[int(row[1])].append([row[0], first_night, last_night, int(row[4])])
+            cameras[int(row[1])].append([row[0], first_night, last_night)])
     return cameras
 
 
