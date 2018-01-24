@@ -55,7 +55,7 @@ def getSurveyFields():
         for row in cur:
             first_night = Time(str(row[2]), format='iso', in_subfmt='date', scale='utc')
             last_night = Time(str(row[3]), format='iso', in_subfmt='date', scale='utc')
-            cameras[int(row[1])].append([row[0], first_night, last_night)])
+            cameras[int(row[1])].append([row[0], first_night, last_night])
     return cameras
 
 
