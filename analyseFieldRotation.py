@@ -7,14 +7,15 @@ Look at how astrometry.net calculates the rotation
 """
 import os
 import math
-import pymysql
 from collections import defaultdict
 import numpy as np
+import pymysql
 import matplotlib
 matplotlib.use('Agg') # Do not require x forwarding to render static files
 import matplotlib.pyplot as plt
 from astropy.time import Time
-import astropy.units as u
+
+# pylint: disable = invalid-name
 
 # connect to the different dbs
 db = pymysql.connect(host='ngtsdb', db='ngts_ops')
@@ -30,7 +31,7 @@ def fitQuad(x, y):
     to time series data
     """
     xn = np.linspace(x.min(), x.max(), 100)
-    coeffs = np.polyfit(x,y,2)
+    coeffs = np.polyfit(x, y, 2)
     besty = np.polyval(coeffs, xn)
     return xn, besty
 
@@ -97,7 +98,7 @@ def plotCDMatrixFromField(field_id, release, camera_id):
             arg_key='field' AND
             arg_value='{0:s}' AND
             tag='{1:s}')
-        """.format(field_id,release)
+        """.format(field_id, release)
 
     with db.cursor() as cur:
         length = cur.execute(qry)
@@ -121,36 +122,46 @@ def plotCDMatrixFromField(field_id, release, camera_id):
     cd21 = np.array(cd21)
     cd22 = np.array(cd22)
 
+    # now extract the rotation from the CD matrix
+    rot1 = math.degrees(math.atan(cd21/cd11))
+    rot2 = math.degrees(math.atan(-cd12/cd22))
+
     # make the x axis easier to plot
     times = times - times[0]
 
-    # plot 
-    fig=plt.figure(1,figsize=(15,15))
-    plt.ticklabel_format(style='plain')#, axis='y', scilimits=(0,0))
-    ax11=plt.subplot2grid((4,4),(0,0),colspan=2,rowspan=2)
-    ax12=plt.subplot2grid((4,4),(0,2),colspan=2,rowspan=2, sharex=ax11)
-    ax21=plt.subplot2grid((4,4),(2,0),colspan=2,rowspan=2, sharex=ax11)
-    ax22=plt.subplot2grid((4,4),(2,2),colspan=2,rowspan=2, sharex=ax11)
+    # plot
+    fig = plt.figure(1, figsize=(15, 15))
+    fig.ticklabel_format(style='plain')#, axis='y', scilimits=(0,0))
+    ax11 = fig.subplot2grid((6, 4), (0, 0), colspan=2, rowspan=2)
+    ax12 = fig.subplot2grid((6, 4), (0, 2), colspan=2, rowspan=2, sharex=ax11)
+    ax21 = fig.subplot2grid((6, 4), (2, 0), colspan=2, rowspan=2, sharex=ax11)
+    ax22 = fig.subplot2grid((6, 4), (2, 2), colspan=2, rowspan=2, sharex=ax11)
+    axr1 = fig.subplot2grid((6, 4), (4, 0), colspan=2, rowspan=2, sharex=ax11)
+    axr2 = fig.subplot2grid((6, 4), (4, 2), colspan=2, rowspan=2, sharex=ax11)
     ax11.plot(times, cd11, 'k.')
     ax11.set_title('CD1_1')
-    ax11.set_ylabel('Rot')
+    ax11.set_ylabel('')
     ax12.plot(times, cd12, 'k.')
     ax12.set_title('CD1_2')
     ax21.plot(times, cd21, 'k.')
     ax21.set_title('CD2_1')
-    ax21.set_ylabel('Rot')
-    ax21.set_xlabel('Days since day 0')
+    ax21.set_ylabel('')
     ax22.plot(times, cd22, 'k.')
     ax22.set_title('CD2_2')
-    ax22.set_xlabel('Days since day 0')
-    plt.savefig('{0:s}{1:s}'.format(outdir, outname))
+    axr1.plot(times, rot1, 'k.')
+    axr1.set_title('Rot 1')
+    axr1.set_ylabel('Degrees')
+    axr1.set_xlabel('Days since day 0')
+    axr2.plot(times, rot2, 'k.')
+    axr2.set_title('Rot 2')
+    axr2.set_xlabel('Days since day 0')
+    fig.savefig('{0:s}{1:s}'.format(outdir, outname))
 
 if __name__ == '__main__':
     cameras = getSurveyFields()
-    c=1
+    c = 1
     for i in cameras:
         for j in cameras[i]:
             print('{0:d} Plotting CD Matrix for {1:d} - {2:s}'.format(c, i, j[0]))
             plotCDMatrixFromField(j[0], release, i)
             c += 1
-
