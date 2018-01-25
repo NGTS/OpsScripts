@@ -123,8 +123,8 @@ def plotCDMatrixFromField(field_id, release, camera_id):
     cd22 = np.array(cd22)
 
     # now extract the rotation from the CD matrix
-    rot1 = math.degrees(math.atan(cd21/cd11))
-    rot2 = math.degrees(math.atan(-cd12/cd22))
+    rot1 = np.degrees(np.arctan(cd21/cd11))
+    rot2 = np.degrees(np.arctan(-cd12/cd22))
 
     # make the x axis easier to plot
     times = times - times[0]
