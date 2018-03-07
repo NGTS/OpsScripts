@@ -10,8 +10,8 @@ import numpy as np
 
 pix_scale = 4.96
 refs = {'NGTS-4b': ['80520150922062822', '80520160114005454',
-                   '80520160114005520', '80520160316004726'],
-        'NGTS-3Ab': ['81220170204024257', '81220160819092321', 
+                    '80520160114005520', '80520160316004726'],
+        'NGTS-3Ab': ['81220170204024257', '81220160819092321',
                      '81220170130033545']}
 
 def argParse(refs):
@@ -23,9 +23,9 @@ def argParse(refs):
                    help='target ID',
                    choices=refs.keys())
     return p.parse_args()
-    
+
 if __name__ == "__main__":
-    args = argParse()
+    args = argParse(refs)
     qry = """
         SELECT x_error, y_error, quality
         FROM autoguider_log
