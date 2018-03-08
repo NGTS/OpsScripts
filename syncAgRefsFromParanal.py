@@ -12,6 +12,6 @@ import numpy as np
 
 if __name__ == "__main__":
     os.chdir('/ngts/autoguider_ref/')
-    warwick = np.loadtxt('ags_at_warwick.txt')
+    warwick = np.loadtxt('ags_at_warwick.txt', usecols=[0], unpack=True)
     paranal = sorted(g.glob('*.fits'))
     sync = [image for image in paranal if image not in warwick]
