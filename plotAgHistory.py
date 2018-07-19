@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 camera_id = 802
 night1 = '2016-03-01'
-night2 = '2016-03-31'
+night2 = '2016-03-07'
 
 # DATA GLOBALS
 DATA_LINE_COLOR = 'black'
@@ -34,6 +34,7 @@ AXES_XTICK_DIRECTION = 'in'
 AXES_YTICK_DIRECTION = 'in'
 
 # FIGURE GLOBALS
+ONE_COL_WIDTH = 3.545
 TWO_COL_WIDTH = 7.09
 DPI = 800
 
@@ -73,6 +74,12 @@ def general():
        visible=True,
        size=AXES_MINOR_TICK_LENGTH,
        width=AXES_LINE_WIDTH)
+
+def one_column():
+    """
+    Two-column-width plot settings
+    """
+    rc('figure', figsize=(ONE_COL_WIDTH, (ONE_COL_WIDTH/2)))
 
 def two_column():
     """
@@ -123,7 +130,7 @@ def getAgStatistics(camera_id, night1, night2):
 
 if __name__ == "__main__":
     general()
-    two_column()
+    one_column()
     # grab the data, scale the number on the x axis
     scaling_factor = 1000.
     x_error, y_error, x_delta, y_delta, night, \
