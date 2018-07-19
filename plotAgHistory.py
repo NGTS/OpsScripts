@@ -126,9 +126,8 @@ def getAgStatistics(camera_id, night1, night2):
             boundaries.append(i+1)
             night_str.append(night[i].strftime("%d"))
 
-    # TODO: bodge for narrow plot, fix this later
     night_str.append('07')
-    boundaries.append(25)
+    boundaries.append(len(night))
 
     return x_error, y_error, x_delta, y_delta, \
            night, np.array(boundaries), night_str
