@@ -125,6 +125,11 @@ def getAgStatistics(camera_id, night1, night2):
         if night[i+1] != night[i]:
             boundaries.append(i+1)
             night_str.append(night[i].strftime("%d"))
+
+    # TODO: bodge for narrow plot, fix this later
+    night_str.append('07')
+    boundaries.append(25)
+
     return x_error, y_error, x_delta, y_delta, \
            night, np.array(boundaries), night_str
 
@@ -135,9 +140,6 @@ if __name__ == "__main__":
     scaling_factor = 1000.
     x_error, y_error, x_delta, y_delta, night, \
     boundaries, night_str = getAgStatistics(camera_id, night1, night2)
-    # TODO: bodge for narrow plot, fix this later
-    night_str.append('07')
-    boundaries.append(25)
 
     ind = np.arange(len(x_error))/1000.
     boundaries = boundaries/1000.
