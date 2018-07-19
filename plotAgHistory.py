@@ -135,6 +135,10 @@ if __name__ == "__main__":
     scaling_factor = 1000.
     x_error, y_error, x_delta, y_delta, night, \
     boundaries, night_str = getAgStatistics(camera_id, night1, night2)
+    # TODO: bodge for narrow plot, fix this later
+    night_str.append('07')
+    boundaries.append(25)
+
     ind = np.arange(len(x_error))/1000.
     boundaries = boundaries/1000.
     # set up the plots
@@ -152,10 +156,12 @@ if __name__ == "__main__":
     ax[0].yaxis.set_ticks_position('both')
     ax[0].xaxis.set_ticks_position('both')
     # draw night boundaries
+    # TODO: +1 is bodge for narrow plot, fix this later
     for k in range(0, len(boundaries)+1):
         ax[0].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
         ax[0].text(boundaries[k]-1.55, 0.5, night_str[k], fontsize=5)
     # plot the cumulative error
+    # TODO: +1 is bodge for narrow plot, fix this later
     ax[1].plot(ind, x_delta, 'r.', ind, y_delta, 'b.', ms=0.25, marker='.')
     ax[1].set_ylabel('Correction (pixels)')
     for k in range(0, len(boundaries)+1):
