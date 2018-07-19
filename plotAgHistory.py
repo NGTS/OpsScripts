@@ -44,7 +44,7 @@ def general():
     then call any cascading style required
     """
     rc('font', family='Times New Roman', size=7)
-    rc('text', color='black', usetex=True)
+    rc('text', color='black', usetex=False)
     rc('figure', dpi=DPI)
     rc('axes',
        xmargin=0.05,
