@@ -43,7 +43,7 @@ def general():
     General settings for all plot types. Call this first,
     then call any cascading style required
     """
-    rc('font', family='Times New Roman', size=7)
+    rc('font', family='Times New Roman', size=5)
     rc('text', color='black', usetex=False)
     rc('figure', dpi=DPI)
     rc('axes',
@@ -145,7 +145,7 @@ if __name__ == "__main__":
     ax[0].legend(('X RMS: %.2f pix' % (np.std(x_error)),
                   'Y RMS: %.2f pix' % (np.std(y_error))),
                  loc='lower right', markerscale=3,
-                 fontsize=7, scatterpoints=1,
+                 fontsize=5, scatterpoints=1,
                  facecolor='white', edgecolor='black')
     ax[0].set_ylim(-1.1, 1.1)
     ax[0].set_xlim(0, max(ind))
@@ -154,13 +154,13 @@ if __name__ == "__main__":
     # draw night boundaries
     for k in range(0, len(boundaries)):
         ax[0].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
-        ax[0].text(boundaries[k]-1.55, 0.5, night_str[k], fontsize=7)
+        ax[0].text(boundaries[k]-1.55, 0.5, night_str[k], fontsize=5)
     # plot the cumulative error
     ax[1].plot(ind, x_delta, 'r.', ind, y_delta, 'b.', ms=0.25, marker='.')
     ax[1].set_ylabel('Correction (pixels)')
     for k in range(0, len(boundaries)):
         ax[1].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
-        ax[1].text(boundaries[k]-1.55, 2, night_str[k], fontsize=7)
+        ax[1].text(boundaries[k]-1.55, 2, night_str[k], fontsize=5)
     ax[1].set_ylim(-16, 6)
     ax[1].set_xlim(0, max(ind))
     ax[1].yaxis.set_ticks_position('both')
