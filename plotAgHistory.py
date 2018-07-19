@@ -158,15 +158,13 @@ if __name__ == "__main__":
     ax[0].yaxis.set_ticks_position('both')
     ax[0].xaxis.set_ticks_position('both')
     # draw night boundaries
-    # TODO: +1 is bodge for narrow plot, fix this later
-    for k in range(0, len(boundaries)+1):
+    for k in range(0, len(boundaries)):
         ax[0].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
         ax[0].text(boundaries[k]-1.55, 0.5, night_str[k], fontsize=5)
     # plot the cumulative error
-    # TODO: +1 is bodge for narrow plot, fix this later
     ax[1].plot(ind, x_delta, 'r.', ind, y_delta, 'b.', ms=0.25, marker='.')
     ax[1].set_ylabel('Correction (pixels)')
-    for k in range(0, len(boundaries)+1):
+    for k in range(0, len(boundaries)):
         ax[1].axvline(boundaries[k], lw=0.5, ls='dashed', color='k')
         ax[1].text(boundaries[k]-1.55, 2, night_str[k], fontsize=5)
     ax[1].set_ylim(-16, 6)
