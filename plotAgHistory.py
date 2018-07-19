@@ -171,6 +171,6 @@ if __name__ == "__main__":
     ax[1].yaxis.set_ticks_position('both')
     ax[1].xaxis.set_ticks_position('both')
     ax[1].set_xlabel(r'Image number ($\times10^{3}$)')
-    plt.subplots_adjust(left=0.1, right=0.98, top=0.97,
-                        bottom=0.17, hspace=0.05)
+    plt.subplots_adjust(left=0.14, right=0.98, top=0.97,
+                        bottom=0.19, hspace=0.05)
     fig.savefig('AgResiduals_802_March2016.png')
