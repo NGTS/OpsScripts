@@ -25,10 +25,10 @@ if __name__ == "__main__":
     data = get_battery_data(start, finish)
 
     time = data['last_update']
-    north_1 = data['north_v2']
-    north_2 = data['north_v4']
-    south_1 = data['south_v1']
-    south_2 = data['south_v4']
+    north_1 = data['north_v2'][::500]
+    north_2 = data['north_v4'][::500]
+    south_1 = data['south_v1'][::500]
+    south_2 = data['south_v4'][::500]
 
     fig, ax = plt.subplots(2, figsize=(10, 10), sharex=True)
     ax[0].plot(time, north_1, 'r-')
