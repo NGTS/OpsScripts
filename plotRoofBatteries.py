@@ -32,7 +32,7 @@ if __name__ == "__main__":
         south_1.append(data['south_v1'])
         south_2.append(data['south_v4'])
 
-    fig, ax = plt.subplots(2, figsize=(10, 10), sharex=True)
+    fig, ax = plt.subplots(2, figsize=(10, 10), sharex=True, sharey=True)
     ax[0].plot(time[::500], north_1[::500], 'r-')
     ax[0].plot(time[::500], north_2[::500], 'k-')
     ax[0].set_ylabel('Volts (north)')
