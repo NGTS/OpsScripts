@@ -14,7 +14,7 @@ def get_battery_data(start, finish):
         """
     qry_args  = (start, finish)
     with pymysql.connect(host='10.2.5.32', db='ngts_ops',
-                         cursorclass=pymysql.DictCursor) as cur:
+                         cursorclass=pymysql.cursors.DictCursor) as cur:
         cur.execute(qry, qry_args)
         results = cur.fetchall()
     return results
