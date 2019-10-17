@@ -35,7 +35,13 @@ if __name__ == "__main__":
     fig, ax = plt.subplots(2, figsize=(10, 10), sharex=True)
     ax[0].plot(time[::500], north_1[::500], 'r-')
     ax[0].plot(time[::500], north_2[::500], 'k-')
+    ax[0].set_ylabel('Volts (north)')
+    ax[0].legend(('battery 1', 'battery 2',), )
     ax[1].plot(time[::500], south_1[::500], 'r-')
     ax[1].plot(time[::500], south_2[::500], 'k-')
+    ax[1].legend(('battery 1', 'battery 2',), )
+    ax[1].set_ylabel('Volts (south)')
+    ax[1].set_xlabel('Date')
+    fig.tight_layout()
     fig.savefig('battery_voltage.png', dpi=300)
 
