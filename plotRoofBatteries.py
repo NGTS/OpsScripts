@@ -1,6 +1,6 @@
 #!/usr/local/python/bin/python
 import pymysql
-import matplotlib.pyplot as pl
+import matplotlib.pyplot as plt
 
 def get_battery_data(start, finish):
     """
@@ -12,7 +12,7 @@ def get_battery_data(start, finish):
         FROM roof_battery_voltage
         WHERE last_update > %s AND last_update < %s
         """
-    qry_args  = (start, finish)
+    qry_args = (start, finish)
     with pymysql.connect(host='10.2.5.32', db='ngts_ops',
                          cursorclass=pymysql.cursors.DictCursor) as cur:
         cur.execute(qry, qry_args)
