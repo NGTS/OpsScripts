@@ -21,7 +21,7 @@ def get_battery_data(start, finish):
 
 if __name__ == "__main__":
     start = "2019-01-01 00:00:00"
-    finish = "2019-10-31 23:59:59"
+    finish = "2019-11-30 23:59:59"
     datas = get_battery_data(start, finish)
 
     time, north_1, north_2, south_1, south_2 = [], [], [], [], []
