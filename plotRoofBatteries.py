@@ -20,7 +20,7 @@ def get_battery_data(start, finish):
     return results
 
 if __name__ == "__main__":
-    start = "2019-01-01 00:00:00"
+    start = "2019-09-01 00:00:00"
     finish = "2019-12-31 23:59:59"
     datas = get_battery_data(start, finish)
 
