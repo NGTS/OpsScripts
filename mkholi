@@ -1,0 +1,23 @@
+#!/usr/local/python/bin/python
+"""
+Utility to make an nghomelimits screen session
+"""
+import os
+import socket
+
+def makeScreen():
+    sn = 'nghomelimits'
+    hn = socket.gethostname().split('-')[-2:]
+    if 'das' in hn:
+        results = os.popen('screen -ls').readlines()
+        for line in results:
+            if sn in line:
+                print('Found {} screen, skipping...'.format(sn))
+                return 0
+        print('{} screen not found, making it...'.format(sn))
+        os.system('screen -d -m -S {}'.format(sn))
+    else:
+        print('This command only works on DAS machines')
+
+if __name__ == "__main__":
+    makeScreen()

@@ -13,9 +13,8 @@ def makeScreen():
             if hn in line:
                 print('Found {} screen, skipping...'.format(hn))
                 return 0
-        else:
-            print('{} screen not found, making it...'.format(hn))
-            os.system('screen -d -m -S {}'.format(hn))
+        print('{} screen not found, making it...'.format(hn))
+        os.system('screen -d -m -S {}'.format(hn))
     else:
         print('This command only works on DAS machines')
 
