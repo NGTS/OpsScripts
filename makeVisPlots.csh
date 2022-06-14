@@ -10,8 +10,8 @@ cd $job_dir
 
 foreach job ( run_????-??-?? )
   set night = `echo $job | cut -d'_' -f 2`
-  ssh -f dra@ngts-wrk-head.local "/home/phrvdf/ngvissched/schedule_visualiser.py $night"
-  rm $job
+  ssh -f dra@ngts-wrk-head.local "/usr/local/cron/scripts/schedule_visualiser.py $night"
+  \rm $job
 end
 
 cd -
